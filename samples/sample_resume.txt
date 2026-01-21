@@ -1,0 +1,36 @@
+John Doe
+john.doe@email.com | (555) 123-4567 | linkedin.com/in/johndoe
+
+PROFESSIONAL SUMMARY
+Experienced Software Engineer with 5+ years of expertise in full-stack development, cloud infrastructure, and agile methodologies. Proven track record of delivering scalable applications and improving system performance.
+
+PROFESSIONAL EXPERIENCE
+
+Senior Software Engineer | Tech Corp | Jan 2021 - Present
+• Developed and maintained microservices architecture serving 1M+ daily active users
+• Led team of 4 developers in implementing CI/CD pipelines, reducing deployment time by 60%
+• Implemented RESTful APIs using Python, FastAPI, and PostgreSQL
+• Collaborated with cross-functional teams to deliver features on tight deadlines
+• Optimized database queries, improving application response time by 40%
+
+Software Engineer | StartUp Inc | Jun 2018 - Dec 2020
+• Built responsive web applications using React, TypeScript, and Node.js
+• Designed and implemented user authentication system with JWT tokens
+• Wrote comprehensive unit and integration tests achieving 85% code coverage
+• Participated in code reviews and mentored junior developers
+• Deployed applications to AWS using Docker and Kubernetes
+
+EDUCATION
+Bachelor of Science in Computer Science
+University of Technology | 2014 - 2018
+
+SKILLS
+Programming Languages: Python, JavaScript, TypeScript, Java, SQL
+Frameworks & Libraries: React, Node.js, FastAPI, Django, Express.js
+Cloud & DevOps: AWS, Docker, Kubernetes, Jenkins, CI/CD, Terraform
+Databases: PostgreSQL, MongoDB, Redis, MySQL
+Tools & Methodologies: Git, Agile/Scrum, JIRA, REST APIs, Microservices
+
+CERTIFICATIONS
+AWS Certified Solutions Architect - Associate | 2022
+Certified Kubernetes Application Developer (CKAD) | 2021

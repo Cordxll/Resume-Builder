@@ -1,14 +1,28 @@
 """Resume tailoring service using LLM to generate suggestions"""
 import os
 import json
-from typing import Dict, List
-from openai import AsyncOpenAI
+from typing import Dict, List, Optional
 from dotenv import load_dotenv
 
 load_dotenv()
 
-# Initialize OpenAI client
-client = AsyncOpenAI(api_key=os.getenv('OPENAI_API_KEY', ''))
+# Initialize OpenAI client lazily
+_client: Optional[any] = None
+
+
+def get_openai_client():
+    """Get or create OpenAI client"""
+    global _client
+    if _client is None:
+        try:
+            from openai import AsyncOpenAI
+            api_key = os.getenv('OPENAI_API_KEY', '')
+            if api_key:
+                _client = AsyncOpenAI(api_key=api_key)
+        except Exception as e:
+            print(f"Failed to initialize OpenAI client: {e}")
+            _client = None
+    return _client
 
 
 async def tailor_resume(resume_text: str, job_description: str) -> Dict[str, any]:
@@ -22,7 +36,9 @@ async def tailor_resume(resume_text: str, job_description: str) -> Dict[str, any
     Returns:
         Dictionary with original and tailored sections
     """
-    if not os.getenv('OPENAI_API_KEY'):
+    client = get_openai_client()
+    
+    if not client or not os.getenv('OPENAI_API_KEY'):
         # Return mock data if no API key configured
         return generate_mock_tailoring(resume_text, job_description)
     

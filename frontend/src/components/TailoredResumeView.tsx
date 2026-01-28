@@ -27,6 +27,7 @@ export const TailoredResumeView: React.FC<TailoredResumeViewProps> = ({
     skills: true,
   });
   const [loading, setLoading] = useState(false);
+  const [exportError, setExportError] = useState<string | null>(null);
 
   const handleEdit = (section: string, index?: number) => {
     setEditMode({ section, index });
@@ -82,6 +83,7 @@ export const TailoredResumeView: React.FC<TailoredResumeViewProps> = ({
 
   const handleExport = async () => {
     setLoading(true);
+    setExportError(null);
     try {
       const originalSections = {
         contact: resume?.contact || {},
@@ -114,6 +116,7 @@ export const TailoredResumeView: React.FC<TailoredResumeViewProps> = ({
       document.body.removeChild(a);
     } catch (error) {
       console.error('Export failed:', error);
+      setExportError('Failed to export resume. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -140,6 +143,7 @@ export const TailoredResumeView: React.FC<TailoredResumeViewProps> = ({
                   checked={isAccepted}
                   onChange={() => setAcceptedChanges(prev => ({ ...prev, [sectionKey]: !prev[sectionKey] }))}
                   className="sr-only peer"
+                  aria-label={`Accept changes for ${title}`}
                 />
                 <div className="w-11 h-6 bg-gray-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-500"></div>
                 <span className="ml-2 text-sm font-medium text-gray-700">
@@ -186,6 +190,7 @@ export const TailoredResumeView: React.FC<TailoredResumeViewProps> = ({
                       <button
                         onClick={() => handleEdit(sectionKey, index)}
                         className="opacity-0 group-hover:opacity-100 transition-opacity text-primary-600 hover:text-primary-700"
+                        aria-label={`Edit bullet point ${index + 1}`}
                       >
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
@@ -227,6 +232,7 @@ export const TailoredResumeView: React.FC<TailoredResumeViewProps> = ({
                   <button
                     onClick={() => handleEdit(sectionKey)}
                     className="absolute top-0 right-0 opacity-0 group-hover:opacity-100 transition-opacity text-primary-600 hover:text-primary-700"
+                    aria-label={`Edit ${title}`}
                   >
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
@@ -295,6 +301,23 @@ export const TailoredResumeView: React.FC<TailoredResumeViewProps> = ({
 
       {/* Main Content */}
       <div className="max-w-6xl mx-auto px-4 py-8">
+        {exportError && (
+          <div className="mb-6 bg-red-50 border border-red-200 rounded-lg p-4 flex items-start gap-3">
+            <svg className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <div>
+              <p className="text-red-800 text-sm font-medium">{exportError}</p>
+              <button
+                onClick={() => setExportError(null)}
+                className="text-red-600 hover:text-red-700 text-sm underline mt-1"
+              >
+                Dismiss
+              </button>
+            </div>
+          </div>
+        )}
+
         <div className="space-y-6">
           {renderSection(
             'Professional Summary',
@@ -323,13 +346,14 @@ export const TailoredResumeView: React.FC<TailoredResumeViewProps> = ({
       <button
         onClick={() => setShowChat(!showChat)}
         className="fixed bottom-6 right-6 w-14 h-14 bg-gradient-to-r from-primary-600 to-secondary-600 text-white rounded-full shadow-lg hover:shadow-xl transition-all flex items-center justify-center z-20"
+        aria-label={showChat ? 'Close chat assistant' : 'Open chat assistant'}
       >
         {showChat ? (
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
           </svg>
         ) : (
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
           </svg>
         )}
@@ -370,8 +394,9 @@ export const TailoredResumeView: React.FC<TailoredResumeViewProps> = ({
               <button
                 onClick={handleChatSubmit}
                 className="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
+                aria-label="Send message"
               >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
                 </svg>
               </button>

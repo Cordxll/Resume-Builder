@@ -21,10 +21,6 @@ export const CombinedUpload: React.FC<CombinedUploadProps> = ({ onTailoringCompl
   };
 
   const handleSubmit = async () => {
-    if (!file && !jobDescription) {
-      setError('Please upload a resume and paste a job description');
-      return;
-    }
     if (!file) {
       setError('Please upload a resume');
       return;

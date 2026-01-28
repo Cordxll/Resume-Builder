@@ -1,0 +1,42 @@
+Full Stack Developer - Tech Solutions Inc.
+
+About the Role:
+We are seeking a talented Full Stack Developer to join our growing engineering team. You will work on building scalable web applications and APIs that power our platform serving millions of users.
+
+Responsibilities:
+• Design, develop, and maintain web applications using modern frameworks
+• Build RESTful APIs and microservices architecture
+• Collaborate with product managers and designers to implement new features
+• Write clean, maintainable code with comprehensive test coverage
+• Participate in code reviews and provide constructive feedback
+• Deploy and monitor applications in cloud environments
+• Troubleshoot and debug production issues
+• Mentor junior developers and share knowledge with the team
+
+Required Qualifications:
+• 3+ years of professional software development experience
+• Strong proficiency in Python and JavaScript/TypeScript
+• Experience with React and modern frontend frameworks
+• Solid understanding of RESTful API design and implementation
+• Experience with FastAPI, Django, or similar backend frameworks
+• Proficiency with SQL and NoSQL databases (PostgreSQL, MongoDB)
+• Experience with Git version control and collaborative development
+• Understanding of software development best practices and design patterns
+
+Preferred Qualifications:
+• Experience with cloud platforms (AWS, Azure, or GCP)
+• Knowledge of Docker and containerization
+• Familiarity with CI/CD pipelines and DevOps practices
+• Experience with Kubernetes or other orchestration tools
+• Understanding of microservices architecture
+• Experience with Agile/Scrum methodologies
+• Strong problem-solving and communication skills
+• Bachelor's degree in Computer Science or related field
+
+Benefits:
+• Competitive salary and equity
+• Health, dental, and vision insurance
+• 401(k) matching
+• Flexible work arrangements
+• Professional development opportunities
+• Collaborative team environment

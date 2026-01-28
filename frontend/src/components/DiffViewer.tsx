@@ -20,9 +20,6 @@ export const DiffViewer: React.FC<DiffViewerProps> = ({
     isAccepted: boolean,
     onToggle: () => void
   ) => {
-    const originalText = Array.isArray(original) ? original.join('\n') : original;
-    const tailoredText = Array.isArray(tailored) ? tailored.join('\n') : tailored;
-
     return (
       <div className={`diff-section ${isAccepted ? 'accepted' : ''}`}>
         <div className="diff-header">

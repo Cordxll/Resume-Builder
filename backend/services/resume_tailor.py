@@ -58,7 +58,7 @@ async def tailor_resume(resume_text: str, job_description: str) -> Dict[str, any
             messages=[
                 {
                     "role": "system",
-                    "content": "You are an expert resume writer and ATS optimization specialist. Your job is to suggest improvements to resumes to better match job descriptions WITHOUT inventing experience or skills the candidate doesn't have. Focus on rewriting and reordering existing content to highlight relevant experience."
+                    "content": "You are an expert resume writer specializing in human-readable, impact-focused content. Your job is to transform resumes to emphasize business outcomes and ownership WITHOUT inventing experience. Focus on: 1) Human readability (clear, scannable), 2) Business impact over tasks, 3) Strong ownership verbs (built, led, shipped, improved), 4) Eliminating passive phrases, 5) Quantifying with metrics, 6) Bridging title gaps with context, 7) Prioritizing JD keywords and relevant experience."
                 },
                 {
                     "role": "user",
@@ -83,14 +83,19 @@ async def tailor_resume(resume_text: str, job_description: str) -> Dict[str, any
 
 def create_tailoring_prompt(resume_sections: Dict, job_analysis: Dict) -> str:
     """Create prompt for LLM to generate tailoring suggestions"""
-    prompt = f"""Given the following resume sections and job analysis, suggest improvements to make the resume more ATS-friendly and better aligned with the job requirements.
+    prompt = f"""Given the following resume sections and job analysis, suggest improvements to make the resume more impactful for human readers and aligned with the job requirements.
 
-IMPORTANT RULES:
+IMPORTANT TAILORING RULES:
 1. DO NOT invent any experience, skills, or accomplishments
-2. Only rewrite and reorder existing content
-3. Use keywords from the job description where appropriate
-4. Make bullet points more impactful and quantifiable
-5. Focus on relevant experience
+2. Rewrite bullets for HUMAN READABILITY - make them clear, scannable, and easy to understand
+3. EMPHASIZE BUSINESS IMPACT over tasks - show results, outcomes, and value delivered
+4. USE STRONG OWNERSHIP VERBS: built, led, shipped, improved, architected, delivered, achieved, drove, transformed
+5. ELIMINATE PASSIVE PHRASES: remove "assisted with", "helped with", "worked on", "was responsible for"
+6. QUANTIFY RESULTS with specific metrics, percentages, dollar amounts, or user counts wherever possible
+7. BRIDGE TITLE GAPS by adding context about scope, team size, or technical complexity
+8. PRIORITIZE JD KEYWORDS, tools, and responsibilities - surface the most relevant experience first
+9. Reorder bullets to put the most impressive and relevant achievements at the top
+10. Keep the candidate's authentic voice while making the content more powerful
 
 RESUME SECTIONS:
 Summary: {resume_sections.get('summary', {}).get('content', 'N/A')}
@@ -103,25 +108,28 @@ JOB REQUIREMENTS:
 Keywords: {', '.join(job_analysis.get('keywords', [])[:15])}
 Required Skills: {', '.join(job_analysis.get('required_skills', []))}
 Experience Level: {job_analysis.get('experience_level', 'N/A')}
+Key Responsibilities: {', '.join(job_analysis.get('key_responsibilities', [])[:5])}
 
 Please provide tailored suggestions in JSON format with the following structure:
 {{
   "summary": {{
     "original": "original text",
-    "tailored": "improved text",
-    "changes": ["list of specific changes made"]
+    "tailored": "improved text with stronger ownership language and impact focus",
+    "changes": ["specific explanation of what was changed and WHY (e.g., 'Changed passive 'was responsible for' to active 'Led' to show ownership')", "another change with reasoning"]
   }},
   "experience": {{
     "original_bullets": ["bullet 1", "bullet 2"],
-    "tailored_bullets": ["improved bullet 1", "improved bullet 2"],
-    "changes": ["list of specific changes made"]
+    "tailored_bullets": ["improved bullet 1 with metrics and impact", "improved bullet 2 with strong verbs"],
+    "changes": ["Reordered to prioritize [specific keyword] experience matching JD", "Added metric to quantify impact", "Changed 'helped' to 'drove' to show ownership", "Bridged gap by adding team size context"]
   }},
   "skills": {{
     "original": ["skill1", "skill2"],
-    "tailored": ["reordered/emphasized skills"],
-    "changes": ["list of specific changes made"]
+    "tailored": ["reordered skills matching JD priorities"],
+    "changes": ["Moved [skill] to top to match JD requirements", "Added context about proficiency level"]
   }}
 }}
+
+For each change, explain the reasoning in terms of human readability, business impact, or JD alignment.
 """
     return prompt
 

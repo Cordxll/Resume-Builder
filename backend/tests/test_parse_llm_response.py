@@ -11,9 +11,8 @@ from tests.fixtures import (
     SAMPLE_LLM_RESPONSE_TRUNCATED,
     SAMPLE_LLM_RESPONSE_INVALID,
     EXPECTED_TAILORED_DATA,
+    DUMMY_RESUME,
 )
-
-DUMMY_RESUME = "Experienced engineer with Python and Java skills."
 
 
 class TestParseLlmResponse:
@@ -24,19 +23,11 @@ class TestParseLlmResponse:
 
         assert result == EXPECTED_TAILORED_DATA
 
-        # Verify sectionType is camelCase (not section_type)
-        for section in result["sections"]:
-            assert "sectionType" in section
-            assert "section_type" not in section
-
     def test_markdown_fenced_response(self):
         """Markdown fences are stripped and the payload is parsed correctly."""
         result = parse_llm_response(SAMPLE_LLM_RESPONSE_MARKDOWN, DUMMY_RESUME)
 
-        assert result["summary"]["tailored"] == EXPECTED_TAILORED_DATA["summary"]["tailored"]
-        assert result["skills"]["tailored"] == EXPECTED_TAILORED_DATA["skills"]["tailored"]
-        assert len(result["jobs"]) == len(EXPECTED_TAILORED_DATA["jobs"])
-        assert result["sections"][0]["sectionType"] == "projects"
+        assert result == EXPECTED_TAILORED_DATA
 
     def test_truncated_json_repaired(self):
         """Truncated JSON is repaired and returns a dict with required top-level keys."""
@@ -48,6 +39,13 @@ class TestParseLlmResponse:
         assert "skills" in result
         assert "jobs" in result
         assert "sections" in result
+
+        # Repair must have recovered real content, not just returned an empty fallback.
+        # The summary block appears early in the JSON so it must have been recovered.
+        assert isinstance(result["summary"]["original"], str)
+        assert len(result["summary"]["original"]) > 0
+        assert isinstance(result["summary"]["tailored"], str)
+        assert len(result["summary"]["tailored"]) > 0
 
     def test_invalid_json_returns_minimal(self):
         """Completely invalid JSON returns the minimal data shape with empty fields."""

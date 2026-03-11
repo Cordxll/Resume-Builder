@@ -114,6 +114,12 @@ SAMPLE_LLM_RESPONSE_TRUNCATED = _full[:len(_full) // 2]
 SAMPLE_LLM_RESPONSE_INVALID = "I'm sorry, I cannot process this request. Please try again later."
 
 # ---------------------------------------------------------------------------
+# DUMMY_RESUME
+# A minimal resume string used as input to parse_llm_response in tests.
+# ---------------------------------------------------------------------------
+DUMMY_RESUME = "Experienced engineer with Python and Java skills."
+
+# ---------------------------------------------------------------------------
 # EXPECTED_TAILORED_DATA
 # The expected TailoredData output dict for SAMPLE_LLM_RESPONSE_FULL.
 # Note: section_type is mapped to sectionType in the output.

@@ -10,28 +10,27 @@ import pytest
 from services.resume_tailor import parse_llm_response, _minimal_tailored_data
 from tests.fixtures import (
     SAMPLE_LLM_RESPONSE_FULL,
-    SAMPLE_LLM_RESPONSE_INVALID,
+    DUMMY_RESUME,
 )
 
-DUMMY_RESUME = "Experienced engineer with Python and Java skills."
 
-
-def _get_full_result():
-    """Helper: parse the full sample response once."""
+@pytest.fixture(scope="module")
+def full_result():
+    """Parse the full sample response once per module."""
     return parse_llm_response(SAMPLE_LLM_RESPONSE_FULL, DUMMY_RESUME)
 
 
 class TestContractShape:
 
-    def test_output_has_required_keys(self):
+    def test_output_has_required_keys(self, full_result):
         """Output always has summary, skills, jobs, sections at the top level."""
-        result = _get_full_result()
+        result = full_result
         for key in ("summary", "skills", "jobs", "sections"):
             assert key in result, f"Missing required key: {key}"
 
-    def test_summary_has_required_fields(self):
+    def test_summary_has_required_fields(self, full_result):
         """summary has original, tailored, explanation as strings."""
-        result = _get_full_result()
+        result = full_result
         summary = result["summary"]
         for field in ("original", "tailored", "explanation"):
             assert field in summary, f"summary missing field: {field}"
@@ -39,9 +38,9 @@ class TestContractShape:
                 f"summary.{field} must be str, got {type(summary[field])}"
             )
 
-    def test_skills_has_required_fields(self):
+    def test_skills_has_required_fields(self, full_result):
         """skills has original, tailored, explanation as strings."""
-        result = _get_full_result()
+        result = full_result
         skills = result["skills"]
         for field in ("original", "tailored", "explanation"):
             assert field in skills, f"skills missing field: {field}"
@@ -49,9 +48,9 @@ class TestContractShape:
                 f"skills.{field} must be str, got {type(skills[field])}"
             )
 
-    def test_jobs_structure(self):
+    def test_jobs_structure(self, full_result):
         """Each job has id, company, title, bullets (list)."""
-        result = _get_full_result()
+        result = full_result
         assert isinstance(result["jobs"], list)
         for i, job in enumerate(result["jobs"]):
             assert isinstance(job, dict), f"job[{i}] must be a dict"
@@ -62,9 +61,9 @@ class TestContractShape:
             assert isinstance(job["title"], str), f"job[{i}].title must be str"
             assert isinstance(job["bullets"], list), f"job[{i}].bullets must be list"
 
-    def test_bullet_structure(self):
+    def test_bullet_structure(self, full_result):
         """Each bullet has index (int), original, tailored, explanation (all strings)."""
-        result = _get_full_result()
+        result = full_result
         for i, job in enumerate(result["jobs"]):
             for j, bullet in enumerate(job["bullets"]):
                 assert isinstance(bullet, dict), f"job[{i}].bullet[{j}] must be dict"
@@ -78,9 +77,9 @@ class TestContractShape:
                         f"job[{i}].bullet[{j}].{field} must be str"
                     )
 
-    def test_sections_structure(self):
+    def test_sections_structure(self, full_result):
         """Each section has sectionType (str) and entries (list)."""
-        result = _get_full_result()
+        result = full_result
         assert isinstance(result["sections"], list)
         for i, section in enumerate(result["sections"]):
             assert isinstance(section, dict), f"section[{i}] must be dict"
@@ -93,9 +92,9 @@ class TestContractShape:
                 f"section[{i}].entries must be list"
             )
 
-    def test_section_entry_structure(self):
+    def test_section_entry_structure(self, full_result):
         """Each section entry has id (str) and bullets (list)."""
-        result = _get_full_result()
+        result = full_result
         for i, section in enumerate(result["sections"]):
             for j, entry in enumerate(section["entries"]):
                 assert isinstance(entry, dict), (

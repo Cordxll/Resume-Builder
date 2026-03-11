@@ -11,30 +11,30 @@ Usage:
 import json
 import sys
 
+
 # ---------------------------------------------------------------------------
-# Helpers
+# Checker class (replaces module-level mutable state)
 # ---------------------------------------------------------------------------
 
-passed: list[str] = []
-failed: list[str] = []
+class Checker:
+    def __init__(self) -> None:
+        self.passed: list[str] = []
+        self.failed: list[str] = []
 
+    def ok(self, msg: str) -> None:
+        print(f"  \u2705 {msg}")
+        self.passed.append(msg)
 
-def ok(msg: str) -> None:
-    print(f"  \u2705 {msg}")
-    passed.append(msg)
+    def fail(self, msg: str) -> None:
+        print(f"  \u274c {msg}")
+        self.failed.append(msg)
 
-
-def fail(msg: str) -> None:
-    print(f"  \u274c {msg}")
-    failed.append(msg)
-
-
-def check(condition: bool, pass_msg: str, fail_msg: str) -> bool:
-    if condition:
-        ok(pass_msg)
-    else:
-        fail(fail_msg)
-    return condition
+    def check(self, condition: bool, pass_msg: str, fail_msg: str) -> bool:
+        if condition:
+            self.ok(pass_msg)
+        else:
+            self.fail(fail_msg)
+        return condition
 
 
 def is_nonempty_str(val) -> bool:
@@ -45,20 +45,20 @@ def is_nonempty_str(val) -> bool:
 # TailoredData validation
 # ---------------------------------------------------------------------------
 
-def validate_tailored(data: dict) -> None:
+def validate_tailored(data: dict, checks: Checker) -> None:
     print("\n[TailoredData]")
 
     # Top-level keys
     for key in ("summary", "skills", "jobs", "sections"):
-        check(key in data, f"has top-level key '{key}'", f"missing top-level key '{key}'")
+        checks.check(key in data, f"has top-level key '{key}'", f"missing top-level key '{key}'")
 
     # summary
     print("\n  summary:")
     summary = data.get("summary", {})
-    check(isinstance(summary, dict), "summary is a dict", "summary.summary is not a dict")
+    checks.check(isinstance(summary, dict), "summary is a dict", "summary.summary is not a dict")
     for field in ("original", "tailored", "explanation"):
         val = summary.get(field)
-        check(
+        checks.check(
             is_nonempty_str(val),
             f"summary.{field} is a non-empty string",
             f"summary.{field} is missing or empty (got {repr(val)})",
@@ -67,10 +67,10 @@ def validate_tailored(data: dict) -> None:
     # skills
     print("\n  skills:")
     skills = data.get("skills", {})
-    check(isinstance(skills, dict), "skills is a dict", "skills is not a dict")
-    for field in ("original", "tailored"):
+    checks.check(isinstance(skills, dict), "skills is a dict", "skills is not a dict")
+    for field in ("original", "tailored", "explanation"):
         val = skills.get(field)
-        check(
+        checks.check(
             is_nonempty_str(val),
             f"skills.{field} is a non-empty string",
             f"skills.{field} is missing or empty (got {repr(val)})",
@@ -79,22 +79,24 @@ def validate_tailored(data: dict) -> None:
     # jobs
     print("\n  jobs:")
     jobs = data.get("jobs", [])
-    check(isinstance(jobs, list), "jobs is a list", f"jobs is not a list (got {type(jobs).__name__})")
+    checks.check(isinstance(jobs, list), "jobs is a list", f"jobs is not a list (got {type(jobs).__name__})")
     if isinstance(jobs, list):
+        if not jobs:
+            checks.fail("jobs must be a non-empty list")
         for i, job in enumerate(jobs):
             prefix = f"jobs[{i}]"
-            check(isinstance(job, dict), f"{prefix} is a dict", f"{prefix} is not a dict")
+            checks.check(isinstance(job, dict), f"{prefix} is a dict", f"{prefix} is not a dict")
             if not isinstance(job, dict):
                 continue
             for field in ("id", "company", "title"):
                 val = job.get(field)
-                check(
+                checks.check(
                     is_nonempty_str(val),
                     f"{prefix}.{field} is a non-empty string",
                     f"{prefix}.{field} is missing or empty (got {repr(val)})",
                 )
             bullets = job.get("bullets", [])
-            check(
+            checks.check(
                 isinstance(bullets, list),
                 f"{prefix}.bullets is a list",
                 f"{prefix}.bullets is not a list",
@@ -102,17 +104,17 @@ def validate_tailored(data: dict) -> None:
             if isinstance(bullets, list):
                 for j, bullet in enumerate(bullets):
                     bprefix = f"{prefix}.bullets[{j}]"
-                    check(isinstance(bullet, dict), f"{bprefix} is a dict", f"{bprefix} is not a dict")
+                    checks.check(isinstance(bullet, dict), f"{bprefix} is a dict", f"{bprefix} is not a dict")
                     if not isinstance(bullet, dict):
                         continue
-                    check(
+                    checks.check(
                         isinstance(bullet.get("index"), int),
                         f"{bprefix}.index is an int",
                         f"{bprefix}.index is not an int (got {repr(bullet.get('index'))})",
                     )
                     for field in ("original", "tailored", "explanation"):
                         val = bullet.get(field)
-                        check(
+                        checks.check(
                             is_nonempty_str(val),
                             f"{bprefix}.{field} is a non-empty string",
                             f"{bprefix}.{field} is missing or empty (got {repr(val)})",
@@ -121,7 +123,7 @@ def validate_tailored(data: dict) -> None:
     # sections
     print("\n  sections:")
     sections = data.get("sections", [])
-    check(
+    checks.check(
         isinstance(sections, list),
         "sections is a list",
         f"sections is not a list (got {type(sections).__name__})",
@@ -133,47 +135,98 @@ def validate_tailored(data: dict) -> None:
     if isinstance(sections, list):
         for i, sec in enumerate(sections):
             sprefix = f"sections[{i}]"
-            check(isinstance(sec, dict), f"{sprefix} is a dict", f"{sprefix} is not a dict")
+            checks.check(isinstance(sec, dict), f"{sprefix} is a dict", f"{sprefix} is not a dict")
             if not isinstance(sec, dict):
                 continue
             st = sec.get("sectionType")
-            check(
+            checks.check(
                 isinstance(st, str) and bool(st),
-                f"{sprefix}.sectionType is a non-empty string (got {repr(st)})",
-                f"{sprefix}.sectionType is missing or empty",
+                f"{sprefix}.sectionType is a non-empty string",
+                f"{sprefix}.sectionType is missing or empty (got {repr(st)})",
             )
             if isinstance(st, str):
-                check(
+                checks.check(
                     st in valid_section_types,
                     f"{sprefix}.sectionType '{st}' is a valid type",
                     f"{sprefix}.sectionType '{st}' is not a recognised type",
                 )
             entries = sec.get("entries")
-            check(
+            checks.check(
                 isinstance(entries, list),
                 f"{sprefix}.entries is a list",
                 f"{sprefix}.entries is not a list (got {repr(entries)})",
             )
+            if isinstance(entries, list):
+                for k, entry in enumerate(entries):
+                    eprefix = f"{sprefix}.entries[{k}]"
+                    checks.check(
+                        isinstance(entry, dict),
+                        f"{eprefix} is a dict",
+                        f"{eprefix} is not a dict",
+                    )
+                    if not isinstance(entry, dict):
+                        continue
+                    bullets = entry.get("bullets")
+                    checks.check(
+                        isinstance(bullets, list),
+                        f"{eprefix}.bullets is a list",
+                        f"{eprefix}.bullets is not a list (got {repr(bullets)})",
+                    )
+                    if isinstance(bullets, list):
+                        for j, bullet in enumerate(bullets):
+                            bprefix = f"{eprefix}.bullets[{j}]"
+                            checks.check(
+                                isinstance(bullet, dict),
+                                f"{bprefix} is a dict",
+                                f"{bprefix} is not a dict",
+                            )
+                            if not isinstance(bullet, dict):
+                                continue
+                            checks.check(
+                                isinstance(bullet.get("index"), int),
+                                f"{bprefix}.index is an int",
+                                f"{bprefix}.index is not an int (got {repr(bullet.get('index'))})",
+                            )
+                            for field in ("original", "tailored", "explanation"):
+                                val = bullet.get(field)
+                                checks.check(
+                                    is_nonempty_str(val),
+                                    f"{bprefix}.{field} is a non-empty string",
+                                    f"{bprefix}.{field} is missing or empty (got {repr(val)})",
+                                )
 
 
 # ---------------------------------------------------------------------------
 # ParsedResume validation
 # ---------------------------------------------------------------------------
 
-def validate_parsed(data: dict) -> None:
+def validate_parsed(data: dict, checks: Checker) -> None:
     print("\n[ParsedResume]")
 
     # Top-level keys
     for key in ("sections", "contact", "raw_text"):
-        check(key in data, f"has top-level key '{key}'", f"missing top-level key '{key}'")
+        checks.check(key in data, f"has top-level key '{key}'", f"missing top-level key '{key}'")
 
     # contact
     print("\n  contact:")
     contact = data.get("contact", {})
-    check(isinstance(contact, dict), "contact is a dict", "contact is not a dict")
+    checks.check(isinstance(contact, dict), "contact is a dict", "contact is not a dict")
     if isinstance(contact, dict):
-        for field in ("name", "email", "phone", "linkedin", "github", "website"):
-            check(
+        # Required fields: must be present and non-empty strings
+        for field in ("name", "email"):
+            present = field in contact
+            if present:
+                val = contact[field]
+                checks.check(
+                    isinstance(val, str) and bool(val.strip()),
+                    f"contact.{field} is a non-empty string",
+                    f"contact.{field} is empty or not a string (got {repr(val)})",
+                )
+            else:
+                checks.fail(f"contact.{field} key missing")
+        # Optional fields: presence-only check
+        for field in ("phone", "linkedin", "github", "website"):
+            checks.check(
                 field in contact,
                 f"contact.{field} key present",
                 f"contact.{field} key missing",
@@ -181,7 +234,7 @@ def validate_parsed(data: dict) -> None:
 
     # raw_text
     print("\n  raw_text:")
-    check(
+    checks.check(
         isinstance(data.get("raw_text"), str),
         "raw_text is a string",
         f"raw_text is not a string (got {type(data.get('raw_text')).__name__})",
@@ -190,7 +243,7 @@ def validate_parsed(data: dict) -> None:
     # sections
     print("\n  sections:")
     sections = data.get("sections", [])
-    check(isinstance(sections, list), "sections is a list", "sections is not a list")
+    checks.check(isinstance(sections, list), "sections is a list", "sections is not a list")
     if not isinstance(sections, list):
         return
 
@@ -201,24 +254,24 @@ def validate_parsed(data: dict) -> None:
 
     for i, sec in enumerate(sections):
         sprefix = f"sections[{i}]"
-        check(isinstance(sec, dict), f"{sprefix} is a dict", f"{sprefix} is not a dict")
+        checks.check(isinstance(sec, dict), f"{sprefix} is a dict", f"{sprefix} is not a dict")
         if not isinstance(sec, dict):
             continue
 
         # Every section: type, rawLabel, confidence
         sec_type = sec.get("type")
-        check(
+        checks.check(
             isinstance(sec_type, str) and sec_type in valid_types,
             f"{sprefix}.type '{sec_type}' is valid",
             f"{sprefix}.type '{sec_type}' is missing or not a recognised type",
         )
-        check(
+        checks.check(
             isinstance(sec.get("rawLabel"), str),
             f"{sprefix}.rawLabel is a string",
             f"{sprefix}.rawLabel is missing or not a string",
         )
         conf = sec.get("confidence")
-        check(
+        checks.check(
             isinstance(conf, (int, float)) and 0.0 <= conf <= 1.0,
             f"{sprefix}.confidence {conf} is a float in [0,1]",
             f"{sprefix}.confidence {repr(conf)} is out of range or not numeric",
@@ -227,7 +280,7 @@ def validate_parsed(data: dict) -> None:
         # Type-specific checks
         if sec_type == "experience":
             jobs = sec.get("jobs")
-            check(
+            checks.check(
                 isinstance(jobs, list),
                 f"{sprefix}.jobs is a list",
                 f"{sprefix} (experience) missing 'jobs' list",
@@ -235,30 +288,30 @@ def validate_parsed(data: dict) -> None:
             if isinstance(jobs, list):
                 for j, job in enumerate(jobs):
                     jprefix = f"{sprefix}.jobs[{j}]"
-                    check(isinstance(job, dict), f"{jprefix} is a dict", f"{jprefix} is not a dict")
+                    checks.check(isinstance(job, dict), f"{jprefix} is a dict", f"{jprefix} is not a dict")
                     if not isinstance(job, dict):
                         continue
                     for field in ("id", "company", "title"):
-                        check(
+                        checks.check(
                             field in job,
                             f"{jprefix}.{field} key present",
                             f"{jprefix}.{field} key missing",
                         )
-                    check(
+                    checks.check(
                         isinstance(job.get("bullets"), list),
                         f"{jprefix}.bullets is a list",
                         f"{jprefix}.bullets is not a list",
                     )
 
         elif sec_type in ("summary", "skills"):
-            check(
+            checks.check(
                 is_nonempty_str(sec.get("content")),
                 f"{sprefix}.content is a non-empty string",
                 f"{sprefix} ({sec_type}) has missing or empty 'content'",
             )
 
         elif sec_type in ("education", "projects", "certifications", "awards"):
-            check(
+            checks.check(
                 isinstance(sec.get("entries"), list),
                 f"{sprefix}.entries is a list",
                 f"{sprefix} ({sec_type}) missing 'entries' list",
@@ -269,20 +322,20 @@ def validate_parsed(data: dict) -> None:
 # Detection
 # ---------------------------------------------------------------------------
 
-def detect_and_validate(data: dict) -> None:
+def detect_and_validate(data: dict, checks: Checker) -> None:
     """Detect payload type and dispatch to the appropriate validator."""
     # TailoredData: top-level "jobs" key (list of job objects)
     if "jobs" in data and isinstance(data.get("jobs"), list):
-        validate_tailored(data)
+        validate_tailored(data, checks)
     # ParsedResume: "sections" where items have a "type" field
     elif "sections" in data and isinstance(data.get("sections"), list):
         sections = data["sections"]
         if sections and isinstance(sections[0], dict) and "type" in sections[0]:
-            validate_parsed(data)
+            validate_parsed(data, checks)
         elif not sections:
             # Empty sections — fall back to ParsedResume if "contact" present
             if "contact" in data or "raw_text" in data:
-                validate_parsed(data)
+                validate_parsed(data, checks)
             else:
                 print("ERROR: Cannot determine payload type (empty sections, no contact/raw_text).")
                 sys.exit(2)
@@ -314,12 +367,14 @@ def main() -> None:
         print(f"ERROR: Invalid JSON in {path}: {exc}")
         sys.exit(2)
 
+    checks = Checker()
+
     print(f"Validating: {path}")
-    detect_and_validate(data)
+    detect_and_validate(data, checks)
 
     print()
-    total_passed = len(passed)
-    total_failed = len(failed)
+    total_passed = len(checks.passed)
+    total_failed = len(checks.failed)
 
     if total_failed == 0:
         print(f"Contract validation: PASSED ({total_passed} checks)")

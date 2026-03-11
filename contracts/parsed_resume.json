@@ -1,0 +1,88 @@
+{
+  "contact": {
+    "name": "Jordan Lee",
+    "email": "jordan.lee@example.com",
+    "phone": "+1 (512) 555-0192",
+    "linkedin": "linkedin.com/in/jordanlee-dev",
+    "github": "github.com/jordanlee-dev",
+    "website": null
+  },
+  "sections": [
+    {
+      "type": "summary",
+      "rawLabel": "Professional Summary",
+      "confidence": 1.0,
+      "content": "Software engineer with 5 years of experience building web applications using Python, JavaScript, and cloud services. Familiar with agile methodologies and collaborative development environments."
+    },
+    {
+      "type": "experience",
+      "rawLabel": "Work Experience",
+      "confidence": 1.0,
+      "jobs": [
+        {
+          "id": "job-0",
+          "company": "DataFlow Systems",
+          "title": "Software Engineer",
+          "location": "Austin, TX",
+          "dates": "Mar 2021 – Present",
+          "bullets": [
+            { "text": "Built REST APIs for internal data processing pipelines", "index": 0 },
+            { "text": "Worked with the team to migrate services to Docker containers", "index": 1 },
+            { "text": "Helped maintain PostgreSQL databases for production systems", "index": 2 }
+          ]
+        },
+        {
+          "id": "job-1",
+          "company": "WebCraft Studio",
+          "title": "Junior Software Developer",
+          "location": "Remote",
+          "dates": "Jun 2019 – Feb 2021",
+          "bullets": [
+            { "text": "Developed features for a Django-based SaaS platform", "index": 0 },
+            { "text": "Wrote unit tests and helped improve code coverage", "index": 1 },
+            { "text": "Assisted with onboarding new team members", "index": 2 }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "skills",
+      "rawLabel": "Technical Skills",
+      "confidence": 0.98,
+      "content": "Python, JavaScript, React, SQL, PostgreSQL, Docker, Git, REST APIs, Agile"
+    },
+    {
+      "type": "education",
+      "rawLabel": "Education",
+      "confidence": 1.0,
+      "entries": [
+        {
+          "id": "edu-0",
+          "institution": "University of Texas at Austin",
+          "degree": "B.S.",
+          "field": "Computer Science",
+          "dates": "Aug 2015 – May 2019",
+          "bullets": []
+        }
+      ]
+    },
+    {
+      "type": "projects",
+      "rawLabel": "Projects",
+      "confidence": 1.0,
+      "entries": [
+        {
+          "id": "proj-0",
+          "name": "Job Board Aggregator",
+          "dates": "2022",
+          "description": "Personal project to aggregate and search software engineering job listings",
+          "bullets": [
+            { "text": "Built a job board aggregator that scrapes listings from multiple sites", "index": 0 },
+            { "text": "Added a search feature using basic keyword matching", "index": 1 }
+          ]
+        }
+      ]
+    }
+  ],
+  "raw_text": "Jordan Lee\njordan.lee@example.com | +1 (512) 555-0192 | linkedin.com/in/jordanlee-dev | github.com/jordanlee-dev\n\nProfessional Summary\nSoftware engineer with 5 years of experience building web applications using Python, JavaScript, and cloud services. Familiar with agile methodologies and collaborative development environments.\n\nWork Experience\n\nDataFlow Systems — Software Engineer\nAustin, TX | Mar 2021 – Present\n- Built REST APIs for internal data processing pipelines\n- Worked with the team to migrate services to Docker containers\n- Helped maintain PostgreSQL databases for production systems\n\nWebCraft Studio — Junior Software Developer\nRemote | Jun 2019 – Feb 2021\n- Developed features for a Django-based SaaS platform\n- Wrote unit tests and helped improve code coverage\n- Assisted with onboarding new team members\n\nTechnical Skills\nPython, JavaScript, React, SQL, PostgreSQL, Docker, Git, REST APIs, Agile\n\nEducation\nUniversity of Texas at Austin — B.S. Computer Science\nAug 2015 – May 2019\n\nProjects\nJob Board Aggregator (2022)\nPersonal project to aggregate and search software engineering job listings\n- Built a job board aggregator that scrapes listings from multiple sites\n- Added a search feature using basic keyword matching\n"
+}

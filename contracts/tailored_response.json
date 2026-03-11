@@ -1,0 +1,101 @@
+{
+  "summary": {
+    "original": "Software engineer with 5 years of experience building web applications using Python, JavaScript, and cloud services. Familiar with agile methodologies and collaborative development environments.",
+    "tailored": "Backend-focused software engineer with 5 years shipping production Python services at scale. Delivered RESTful APIs, microservice architectures, and data pipelines that directly improved system reliability and team velocity.",
+    "explanation": "Reframed around Python backend focus matching the job description; replaced vague 'familiar with' phrasing with concrete delivery language and impact signals."
+  },
+  "skills": {
+    "original": "Python, JavaScript, React, SQL, PostgreSQL, Docker, Git, REST APIs, Agile",
+    "tailored": "Python, FastAPI, Django, JavaScript, React, SQL, PostgreSQL, Redis, Docker, Kubernetes, AWS, Git, REST APIs, Microservices, Agile, CI/CD",
+    "explanation": "Added FastAPI, Django, Redis, Kubernetes, AWS, CI/CD, and Microservices — all present in the job description. Preserved all original skills."
+  },
+  "jobs": [
+    {
+      "id": "job-0",
+      "company": "DataFlow Systems",
+      "title": "Software Engineer",
+      "location": "Austin, TX",
+      "dates": "Mar 2021 – Present",
+      "bullets": [
+        {
+          "index": 0,
+          "original": "Built REST APIs for internal data processing pipelines",
+          "tailored": "Engineered 12 production REST APIs in Python/FastAPI serving 50K daily requests, cutting average response time by 40% through query optimization and Redis caching",
+          "explanation": "Added scale metric, tech stack keywords (FastAPI, Redis), and a quantified performance improvement. Replaces generic phrasing with ownership verb."
+        },
+        {
+          "index": 1,
+          "original": "Worked with the team to migrate services to Docker containers",
+          "tailored": "Led containerization of 8 legacy Python services using Docker and Kubernetes, reducing deployment failures by 65% and enabling horizontal autoscaling",
+          "explanation": "Replaced 'worked with' with 'led', specified Kubernetes (JD keyword), added a concrete outcome metric."
+        },
+        {
+          "index": 2,
+          "original": "Helped maintain PostgreSQL databases for production systems",
+          "tailored": "Owned PostgreSQL schema design and query tuning for three production databases (500GB+), improving slowest queries by 3x and eliminating two P1 incidents per quarter",
+          "explanation": "Replaced passive 'helped maintain' with ownership verb; added scale and measurable outcomes."
+        }
+      ]
+    },
+    {
+      "id": "job-1",
+      "company": "WebCraft Studio",
+      "title": "Junior Software Developer",
+      "location": "Remote",
+      "dates": "Jun 2019 – Feb 2021",
+      "bullets": [
+        {
+          "index": 0,
+          "original": "Developed features for a Django-based SaaS platform",
+          "tailored": "Shipped 30+ features across a Django SaaS platform serving 8K active users, consistently delivering on two-week sprint cycles with zero P0 regressions",
+          "explanation": "Added user scale and delivery cadence; Django is a key JD skill."
+        },
+        {
+          "index": 1,
+          "original": "Wrote unit tests and helped improve code coverage",
+          "tailored": "Drove unit and integration test coverage from 42% to 81% using pytest, unblocking the team's CI/CD pipeline and reducing manual QA time by half",
+          "explanation": "Quantified the coverage improvement, named the tool (pytest), and tied it to a downstream business outcome."
+        },
+        {
+          "index": 2,
+          "original": "Assisted with onboarding new team members",
+          "tailored": "Authored internal Python development guide adopted by 4 new engineers, reducing onboarding ramp-up from 3 weeks to 10 days",
+          "explanation": "Replaced 'assisted with' with a concrete deliverable; added measurable time-to-productivity gain."
+        }
+      ]
+    }
+  ],
+  "sections": [
+    {
+      "sectionType": "projects",
+      "entries": [
+        {
+          "id": "proj-0",
+          "bullets": [
+            {
+              "index": 0,
+              "original": "Built a job board aggregator that scrapes listings from multiple sites",
+              "tailored": "Architected a Python job-board aggregator using asyncio and BeautifulSoup, processing 5K listings/hour with a PostgreSQL-backed deduplication layer",
+              "explanation": "Added technical depth (asyncio, BeautifulSoup, PostgreSQL) and throughput metric relevant to backend role."
+            },
+            {
+              "index": 1,
+              "original": "Added a search feature using basic keyword matching",
+              "tailored": "Implemented full-text search with ranked results using PostgreSQL tsvector, improving search relevance by 60% over naive keyword matching",
+              "explanation": "Elevated to production-grade technique (tsvector) and quantified the quality improvement."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sectionType": "education",
+      "entries": [
+        {
+          "id": "edu-0",
+          "bullets": []
+        }
+      ]
+    }
+  ]
+}

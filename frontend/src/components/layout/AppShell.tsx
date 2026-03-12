@@ -6,6 +6,7 @@ import { ApplicationStatus } from '../../types/storage';
 import { SettingsModal, hasAnyApiKey, checkServerApiKey } from '../SettingsModal';
 import { useAppContext } from '../../context/AppContext';
 import { sessionDB } from '../../services/db';
+import { exportSessionFile, downloadBlob } from '../../services/sessionFile';
 
 const STATUS_CONFIG: Record<ApplicationStatus, { label: string; color: string; bg: string }> = {
   none: { label: 'Set Status', color: 'text-text-muted', bg: 'hover:bg-dark-hover' },
@@ -58,6 +59,7 @@ export const AppShell: React.FC<AppShellProps> = ({
   const [showExportMenu, setShowExportMenu] = useState(false);
   const [showStatusMenu, setShowStatusMenu] = useState(false);
   const [currentAppStatus, setCurrentAppStatus] = useState<ApplicationStatus>('none');
+  const [savedText, setSavedText] = useState<string | null>(null);
 
   // Check server API key status on mount and when settings close
   useEffect(() => {
@@ -103,6 +105,21 @@ export const AppShell: React.FC<AppShellProps> = ({
   const handleExportDocx = () => {
     setShowExportMenu(false);
     onExport();
+  };
+
+  const handleSaveRtb = async () => {
+    setShowExportMenu(false);
+    const data = await exportSession();
+    if (!data) return;
+
+    const blob = await exportSessionFile(data.session, data.resume, data.jobDescription);
+    const rawTitle = data.jobDescription.title || 'session';
+    const slug = rawTitle.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+    const date = new Date().toISOString().split('T')[0];
+    downloadBlob(blob, `session-${slug}-${date}.rtb`);
+
+    setSavedText('Session saved!');
+    setTimeout(() => setSavedText(null), 2000);
   };
 
   return (
@@ -155,6 +172,10 @@ export const AppShell: React.FC<AppShellProps> = ({
           </div>
         </div>
         <div className="flex items-center gap-3">
+          {/* Save Session toast */}
+          {savedText && (
+            <span className="text-xs text-accent-green font-medium transition-opacity">{savedText}</span>
+          )}
           {/* Export Dropdown */}
           <div className="relative">
             <button
@@ -195,6 +216,15 @@ export const AppShell: React.FC<AppShellProps> = ({
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
                     </svg>
                     Save Session (JSON)
+                  </button>
+                  <button
+                    onClick={handleSaveRtb}
+                    className="w-full flex items-center gap-3 px-4 py-3 text-sm text-text-primary hover:bg-dark-hover transition-colors text-left border-t border-dark-border"
+                  >
+                    <svg className="w-4 h-4 text-accent-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
+                    </svg>
+                    Save Session (.rtb)
                   </button>
                 </div>
               </>

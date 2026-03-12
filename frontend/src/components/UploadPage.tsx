@@ -4,6 +4,7 @@ import { ParsedResume, TailoredData } from '../types';
 import { ApplicationStatus } from '../types/storage';
 import { SettingsModal } from './SettingsModal';
 import { useAppContext, SessionSummary, ExportedSession, SavedResumeSummary, SavedJobDescriptionSummary } from '../context/AppContext';
+import { importSessionFile } from '../services/sessionFile';
 
 interface UploadPageProps {
   onTailoringComplete: (
@@ -75,6 +76,8 @@ export const UploadPage: React.FC<UploadPageProps> = ({ onTailoringComplete: _on
   const [showSessions, setShowSessions] = useState(false);
   const [loadingSessions, setLoadingSessions] = useState(false);
   const importInputRef = useRef<HTMLInputElement>(null);
+  const rtbInputRef = useRef<HTMLInputElement>(null);
+  const [rtbError, setRtbError] = useState<string | null>(null);
 
   // Saved resumes state
   const [savedResumes, setSavedResumes] = useState<SavedResumeSummary[]>([]);
@@ -190,6 +193,54 @@ export const UploadPage: React.FC<UploadPageProps> = ({ onTailoringComplete: _on
     // Reset input
     if (importInputRef.current) {
       importInputRef.current.value = '';
+    }
+  };
+
+  const handleRtbRestoreClick = () => {
+    setRtbError(null);
+    rtbInputRef.current?.click();
+  };
+
+  const handleRtbFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setRtbError(null);
+
+    try {
+      const bundles = await importSessionFile(file);
+      if (bundles.length === 0) {
+        setRtbError('No sessions found in file.');
+        return;
+      }
+
+      // Import all bundles; navigate is handled by importSession on each call
+      let firstSuccess = false;
+      for (const bundle of bundles) {
+        const data: ExportedSession = {
+          version: 1,
+          exportedAt: new Date().toISOString(),
+          resume: bundle.resume,
+          jobDescription: bundle.jobDescription,
+          session: bundle.session,
+        };
+        const success = await importSession(data);
+        if (success && !firstSuccess) {
+          firstSuccess = true;
+        }
+      }
+
+      if (!firstSuccess) {
+        setRtbError('Failed to restore session from file.');
+      }
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Failed to read .rtb file.';
+      setRtbError(message);
+    }
+
+    // Reset input
+    if (rtbInputRef.current) {
+      rtbInputRef.current.value = '';
     }
   };
 
@@ -544,16 +595,27 @@ export const UploadPage: React.FC<UploadPageProps> = ({ onTailoringComplete: _on
               </>
             )}
           </button>
-          {/* Import button */}
+          {/* Import button (JSON legacy) */}
           <button
             onClick={handleImportClick}
             className="flex items-center gap-2 px-3 py-1.5 text-text-secondary hover:text-text-primary hover:bg-dark-hover rounded-lg transition-colors text-sm"
-            title="Import Session"
+            title="Import Session (JSON)"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
             </svg>
             Import
+          </button>
+          {/* Restore Session (.rtb) button */}
+          <button
+            onClick={handleRtbRestoreClick}
+            className="flex items-center gap-2 px-3 py-1.5 text-text-secondary hover:text-text-primary hover:bg-dark-hover rounded-lg transition-colors text-sm"
+            title="Restore Session (.rtb)"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+            </svg>
+            Restore Session
           </button>
           {/* Settings button */}
           <button
@@ -758,7 +820,7 @@ export const UploadPage: React.FC<UploadPageProps> = ({ onTailoringComplete: _on
             </div>
           )}
 
-          {/* Import Session */}
+          {/* Import Session (JSON legacy) */}
           <input
             type="file"
             ref={importInputRef}
@@ -766,6 +828,20 @@ export const UploadPage: React.FC<UploadPageProps> = ({ onTailoringComplete: _on
             accept=".json"
             className="hidden"
           />
+          {/* Restore Session (.rtb) */}
+          <input
+            type="file"
+            ref={rtbInputRef}
+            onChange={handleRtbFileChange}
+            accept=".rtb"
+            className="hidden"
+          />
+          {/* RTB restore error */}
+          {rtbError && (
+            <div className="mb-4 p-3 bg-accent-red/10 border border-accent-red/30 rounded-lg text-sm text-accent-red">
+              {rtbError}
+            </div>
+          )}
 
           {/* Step Indicator */}
           {(() => {

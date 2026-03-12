@@ -8,7 +8,7 @@ const generateId = () => `${Date.now()}-${Math.random().toString(36).substr(2, 9
 
 // State shape
 interface AppState {
-  currentView: 'upload' | 'workspace' | 'tracker';
+  currentView: 'upload' | 'workspace' | 'tracker' | 'applications';
   currentSessionId: string | null;
 
   // Current session data
@@ -61,7 +61,7 @@ const initialState: AppState = {
 
 // Action types
 type Action =
-  | { type: 'SET_VIEW'; payload: 'upload' | 'workspace' | 'tracker' }
+  | { type: 'SET_VIEW'; payload: 'upload' | 'workspace' | 'tracker' | 'applications' }
   | { type: 'START_SESSION'; payload: { sessionId: string; resume: ParsedResume; resumeText: string; jobDescription: string; tailoredData: TailoredData; chatMessages: ChatMessage[] } }
   | { type: 'RESTORE_SESSION'; payload: { sessionId: string; resume: ParsedResume; resumeText: string; jobDescription: string; tailoredData: TailoredData; acceptedChanges: AcceptedChanges; chatMessages: ChatMessage[]; editHistory?: Map<string, { originalTailored: string; editedValue?: string; isUndone?: boolean; timestamp: Date }> } }
   | { type: 'CLEAR_SESSION' }
@@ -323,6 +323,7 @@ interface AppContextValue {
   startSessionWithExistingResume: (resumeId: string, jobDescription: string, tailoredData: TailoredData, jobDescriptionId?: string) => Promise<void>;
   navigateToUpload: (keepSession?: boolean) => void;
   navigateToTracker: () => void;
+  navigateToApplications: () => void;
   resumeSession: (sessionId: string) => Promise<boolean>;
   getSavedSessions: () => Promise<SessionSummary[]>;
   getSavedResumes: () => Promise<SavedResumeSummary[]>;
@@ -576,6 +577,11 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   // Navigate to tracker view
   const navigateToTracker = useCallback(() => {
     dispatch({ type: 'SET_VIEW', payload: 'tracker' });
+  }, []);
+
+  // Navigate to applications page
+  const navigateToApplications = useCallback(() => {
+    dispatch({ type: 'SET_VIEW', payload: 'applications' });
   }, []);
 
   // Resume an existing session
@@ -1036,6 +1042,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     startSessionWithExistingResume,
     navigateToUpload,
     navigateToTracker,
+    navigateToApplications,
     resumeSession,
     getSavedSessions,
     getSavedResumes,

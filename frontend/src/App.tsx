@@ -3,6 +3,7 @@ import { UploadPage } from './components/UploadPage';
 import { AppShell } from './components/layout/AppShell';
 import { CenterPanel } from './components/layout/CenterPanel';
 import TrackerView from './components/tracker/TrackerView';
+import ApplicationsPage from './components/tracker/ApplicationsPage';
 import { AppProvider, useAppContext } from './context/AppContext';
 import { api } from './services/api';
 import { hasAnyApiKey } from './services/storage';
@@ -39,6 +40,7 @@ function AppContent() {
     state,
     startNewSession,
     navigateToUpload,
+    navigateToTracker,
     updateTailoredData,
     toggleAcceptedChange,
     setActiveSection,
@@ -306,6 +308,10 @@ Only provide ONE improved version. The text inside quotes after "IMPROVED:" will
 
   if (currentView === 'tracker') {
     return <TrackerView onBack={() => navigateToUpload()} />;
+  }
+
+  if (currentView === 'applications') {
+    return <ApplicationsPage onBack={() => navigateToUpload()} onOpenTracker={() => navigateToTracker()} />;
   }
 
   if (currentView === 'upload') {

@@ -209,7 +209,20 @@ export const AppShell: React.FC<AppShellProps> = ({
                   className="fixed inset-0 z-10"
                   onClick={() => setShowExportMenu(false)}
                 />
-                <div className="absolute right-0 mt-2 w-48 bg-dark-surface border border-dark-border rounded-lg shadow-xl z-20 overflow-hidden">
+                <div className="absolute right-0 mt-2 w-56 bg-dark-surface border border-dark-border rounded-lg shadow-xl z-20 overflow-hidden">
+                  <button
+                    onClick={handleSaveRtb}
+                    className="w-full flex items-center gap-3 px-4 py-3 text-sm text-text-primary hover:bg-dark-hover transition-colors text-left"
+                  >
+                    <svg className="w-4 h-4 text-accent-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
+                    </svg>
+                    <div className="flex flex-col items-start">
+                      <span className="text-sm">Save Session (.rtb)</span>
+                      <span className="text-xs text-accent-green">Recommended · portable</span>
+                    </div>
+                  </button>
+                  <div className="border-t border-dark-border" />
                   <button
                     onClick={handleExportDocx}
                     className="w-full flex items-center gap-3 px-4 py-3 text-sm text-text-primary hover:bg-dark-hover transition-colors text-left"
@@ -226,16 +239,10 @@ export const AppShell: React.FC<AppShellProps> = ({
                     <svg className="w-4 h-4 text-accent-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
                     </svg>
-                    Save Session (JSON)
-                  </button>
-                  <button
-                    onClick={handleSaveRtb}
-                    className="w-full flex items-center gap-3 px-4 py-3 text-sm text-text-primary hover:bg-dark-hover transition-colors text-left border-t border-dark-border"
-                  >
-                    <svg className="w-4 h-4 text-accent-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
-                    </svg>
-                    Save Session (.rtb)
+                    <div className="flex flex-col items-start">
+                      <span className="text-sm">Save Session (JSON)</span>
+                      <span className="text-xs text-text-secondary">Legacy format</span>
+                    </div>
                   </button>
                 </div>
               </>

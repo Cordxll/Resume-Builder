@@ -66,6 +66,7 @@ export const UploadPage: React.FC<UploadPageProps> = ({ onTailoringComplete: _on
     startSessionWithExistingResume,
     updateApplicationStatus,
     navigateToTracker,
+    navigateToApplications,
   } = useAppContext();
 
   // Three-step flow state
@@ -628,6 +629,17 @@ export const UploadPage: React.FC<UploadPageProps> = ({ onTailoringComplete: _on
             </svg>
             Restore Session
           </button>
+          {/* My Applications button */}
+          <button
+            onClick={() => navigateToApplications()}
+            className="flex items-center gap-2 px-3 py-1.5 text-text-secondary hover:text-text-primary hover:bg-dark-hover rounded-lg transition-colors text-sm"
+            title="My Applications"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M3 14h18M3 6h18M3 18h18" />
+            </svg>
+            My Applications
+          </button>
           {/* View Tracker button */}
           <button
             onClick={() => navigateToTracker()}
@@ -1130,6 +1142,20 @@ export const UploadPage: React.FC<UploadPageProps> = ({ onTailoringComplete: _on
                     </>
                   )}
                 </button>
+                {/* Secondary restore session link */}
+                {!selectedResumeId && (
+                  <div className="text-center mt-3">
+                    <span className="text-xs text-text-secondary">or </span>
+                    <button
+                      type="button"
+                      onClick={() => rtbInputRef.current?.click()}
+                      className="text-xs text-accent-blue hover:underline"
+                      disabled={loading}
+                    >
+                      restore a previous session (.rtb)
+                    </button>
+                  </div>
+                )}
               </>
             )}
 

@@ -66,7 +66,6 @@ export const UploadPage: React.FC<UploadPageProps> = ({ onTailoringComplete: _on
     startSessionWithExistingResume,
     updateApplicationStatus,
     navigateToTracker,
-    navigateToApplications,
   } = useAppContext();
 
   // Three-step flow state
@@ -628,17 +627,6 @@ export const UploadPage: React.FC<UploadPageProps> = ({ onTailoringComplete: _on
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
             </svg>
             Restore Session
-          </button>
-          {/* My Applications button */}
-          <button
-            onClick={() => navigateToApplications()}
-            className="flex items-center gap-2 px-3 py-1.5 text-text-secondary hover:text-text-primary hover:bg-dark-hover rounded-lg transition-colors text-sm"
-            title="My Applications"
-          >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M3 14h18M3 6h18M3 18h18" />
-            </svg>
-            My Applications
           </button>
           {/* View Tracker button */}
           <button

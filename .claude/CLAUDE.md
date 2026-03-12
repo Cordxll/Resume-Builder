@@ -101,3 +101,16 @@ This is a full-stack resume tailoring app. The backend is a Python FastAPI servi
 **API client** (`services/api.ts`): Thin axios wrapper. `VITE_API_URL` env var overrides the default `http://localhost:8000`.
 
 **Theme**: `useTheme` hook (dark/light) applies a class to `<html>`.
+
+## Data Contracts
+
+**Rule**: Every new feature that introduces or changes a data shape between frontend and backend **must** include all of the following:
+
+1. **Backend contract fixture** — A JSON sample file under `contracts/` representing the exact response shape the backend returns.
+2. **Backend contract test** — A pytest test in `backend/tests/test_contract.py` that validates the backend's actual output matches the fixture (field names, types, nesting).
+3. **Frontend runtime validator** — A function in `frontend/src/utils/validateApiResponse.ts` that checks the response shape at runtime and logs warnings (never throws) when it doesn't match.
+4. **TypeScript types** — Frontend types in `types/index.ts` or `types/storage.ts` must exactly match the contract fixture. Backend must transform `snake_case` → `camelCase` before sending.
+
+**Reference examples**: `contracts/tailored_response.json`, `contracts/parsed_resume.json`, `backend/tests/test_contract.py`, `frontend/src/utils/validateApiResponse.ts`.
+
+**When in doubt**: run `python contracts/validate_contract.py contracts/<fixture>.json` to verify a contract fixture is valid.

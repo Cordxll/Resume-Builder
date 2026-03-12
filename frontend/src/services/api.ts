@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { ParsedResume, TailoredData } from '../types';
+import { validateParsedResume, validateTailoredData } from '../utils/validateApiResponse';
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 
@@ -20,7 +21,7 @@ export const api = {
       },
     });
     
-    return response.data;
+    return validateParsedResume(response.data, 'parse-resume');
   },
 
   async tailorResume(resumeText: string, jobDescription: string): Promise<TailoredData> {
@@ -28,8 +29,8 @@ export const api = {
       resume_text: resumeText,
       job_description: jobDescription,
     });
-    
-    return response.data;
+
+    return validateTailoredData(response.data, 'tailor-resume');
   },
 
   async exportDocx(

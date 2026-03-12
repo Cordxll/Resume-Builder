@@ -31,14 +31,24 @@ const STEPS: StepInfo[] = [
 ];
 
 const APPLICATION_STATUS_CONFIG: Record<ApplicationStatus, { label: string; color: string; bg: string; border: string }> = {
-  none: { label: 'No Status', color: 'text-text-muted', bg: 'bg-dark-elevated', border: 'border-dark-border' },
-  applied: { label: 'Applied', color: 'text-accent-blue', bg: 'bg-accent-blue/10', border: 'border-accent-blue/30' },
-  interviewing: { label: 'Interviewing', color: 'text-accent-yellow', bg: 'bg-accent-yellow/10', border: 'border-accent-yellow/30' },
-  offered: { label: 'Offered', color: 'text-accent-green', bg: 'bg-accent-green/10', border: 'border-accent-green/30' },
-  rejected: { label: 'Rejected', color: 'text-accent-red', bg: 'bg-accent-red/10', border: 'border-accent-red/30' },
+  none:           { label: 'No Status',    color: 'text-text-muted',    bg: 'bg-dark-elevated',        border: 'border-dark-border' },
+  saved:          { label: 'Saved',        color: 'text-text-muted',    bg: 'bg-dark-elevated',        border: 'border-dark-border' },
+  applied:        { label: 'Applied',      color: 'text-accent-blue',   bg: 'bg-accent-blue/10',       border: 'border-accent-blue/30' },
+  'phone-screen': { label: 'Phone Screen', color: 'text-accent-yellow', bg: 'bg-accent-yellow/10',     border: 'border-accent-yellow/30' },
+  'interview-1':  { label: 'Interview 1',  color: 'text-accent-yellow', bg: 'bg-accent-yellow/10',     border: 'border-accent-yellow/30' },
+  'interview-2':  { label: 'Interview 2',  color: 'text-accent-yellow', bg: 'bg-accent-yellow/10',     border: 'border-accent-yellow/30' },
+  'interview-3':  { label: 'Interview 3+', color: 'text-accent-yellow', bg: 'bg-accent-yellow/10',     border: 'border-accent-yellow/30' },
+  'take-home':    { label: 'Take-Home',    color: 'text-accent-yellow', bg: 'bg-accent-yellow/10',     border: 'border-accent-yellow/30' },
+  offered:        { label: 'Offered',      color: 'text-accent-green',  bg: 'bg-accent-green/10',      border: 'border-accent-green/30' },
+  accepted:       { label: 'Accepted',     color: 'text-accent-green',  bg: 'bg-accent-green/10',      border: 'border-accent-green/30' },
+  rejected:       { label: 'Rejected',     color: 'text-accent-red',    bg: 'bg-accent-red/10',        border: 'border-accent-red/30' },
+  withdrawn:      { label: 'Withdrawn',    color: 'text-text-muted',    bg: 'bg-dark-elevated',        border: 'border-dark-border' },
 };
 
-const STATUS_ORDER: ApplicationStatus[] = ['applied', 'interviewing', 'offered', 'rejected'];
+const STATUS_ORDER: ApplicationStatus[] = [
+  'applied', 'phone-screen', 'interview-1', 'interview-2', 'interview-3',
+  'take-home', 'offered', 'accepted', 'rejected', 'withdrawn',
+];
 
 export const UploadPage: React.FC<UploadPageProps> = ({ onTailoringComplete: _onTailoringComplete }) => {
   const {

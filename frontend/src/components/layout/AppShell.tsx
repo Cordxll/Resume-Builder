@@ -9,14 +9,25 @@ import { sessionDB } from '../../services/db';
 import { exportSessionFile, downloadBlob } from '../../services/sessionFile';
 
 const STATUS_CONFIG: Record<ApplicationStatus, { label: string; color: string; bg: string }> = {
-  none: { label: 'Set Status', color: 'text-text-muted', bg: 'hover:bg-dark-hover' },
-  applied: { label: 'Applied', color: 'text-accent-blue', bg: 'bg-accent-blue/10' },
-  interviewing: { label: 'Interviewing', color: 'text-accent-yellow', bg: 'bg-accent-yellow/10' },
-  offered: { label: 'Offered', color: 'text-accent-green', bg: 'bg-accent-green/10' },
-  rejected: { label: 'Rejected', color: 'text-accent-red', bg: 'bg-accent-red/10' },
+  none:         { label: 'Set Status',    color: 'text-text-muted',       bg: 'hover:bg-dark-hover' },
+  saved:        { label: 'Saved',         color: 'text-text-muted',       bg: 'bg-dark-hover' },
+  applied:      { label: 'Applied',       color: 'text-accent-blue',      bg: 'bg-accent-blue/10' },
+  'phone-screen': { label: 'Phone Screen', color: 'text-accent-yellow',   bg: 'bg-accent-yellow/10' },
+  'interview-1': { label: 'Interview 1',  color: 'text-accent-yellow',    bg: 'bg-accent-yellow/10' },
+  'interview-2': { label: 'Interview 2',  color: 'text-accent-yellow',    bg: 'bg-accent-yellow/10' },
+  'interview-3': { label: 'Interview 3+', color: 'text-accent-yellow',    bg: 'bg-accent-yellow/10' },
+  'take-home':  { label: 'Take-Home',     color: 'text-accent-yellow',    bg: 'bg-accent-yellow/10' },
+  offered:      { label: 'Offered',       color: 'text-accent-green',     bg: 'bg-accent-green/10' },
+  accepted:     { label: 'Accepted',      color: 'text-accent-green',     bg: 'bg-accent-green/10' },
+  rejected:     { label: 'Rejected',      color: 'text-accent-red',       bg: 'bg-accent-red/10' },
+  withdrawn:    { label: 'Withdrawn',     color: 'text-text-muted',       bg: 'bg-dark-hover' },
 };
 
-const STATUS_OPTIONS: ApplicationStatus[] = ['none', 'applied', 'interviewing', 'offered', 'rejected'];
+const STATUS_OPTIONS: ApplicationStatus[] = [
+  'none', 'saved', 'applied', 'phone-screen',
+  'interview-1', 'interview-2', 'interview-3', 'take-home',
+  'offered', 'accepted', 'rejected', 'withdrawn',
+];
 
 interface AppShellProps {
   resume: ParsedResume;

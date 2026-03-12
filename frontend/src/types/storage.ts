@@ -19,7 +19,40 @@ export interface StoredJobDescription {
 
 export type SessionStatus = 'active' | 'completed';
 
-export type ApplicationStatus = 'none' | 'applied' | 'interviewing' | 'offered' | 'rejected';
+export type ApplicationStatus =
+  | 'saved'        // bookmarked, haven't applied yet
+  | 'applied'      // submitted application
+  | 'phone-screen' // initial phone/recruiter screen
+  | 'interview-1'  // first round interview
+  | 'interview-2'  // second round
+  | 'interview-3'  // third+ round
+  | 'take-home'    // take-home assignment
+  | 'offered'      // received offer
+  | 'accepted'     // accepted offer
+  | 'rejected'     // rejected (by them or by you)
+  | 'withdrawn'    // withdrew application
+  | 'none';        // not tracking
+
+export interface InterviewRound {
+  round: number;
+  type: 'phone' | 'technical' | 'behavioral' | 'system-design' | 'hiring-manager' | 'panel' | 'other';
+  date?: string;        // ISO date string
+  notes?: string;
+  interviewerName?: string;
+  outcome?: 'passed' | 'failed' | 'pending' | 'cancelled';
+}
+
+export interface ApplicationTracking {
+  applicationUrl?: string;
+  appliedVia?: string;
+  contactName?: string;
+  contactEmail?: string;
+  salary?: string;
+  notes?: string;
+  interviews: InterviewRound[];
+  nextFollowUp?: string;  // ISO date
+  tags?: string[];
+}
 
 export interface TailoringSession {
   id: string;
@@ -31,6 +64,7 @@ export interface TailoringSession {
   status: SessionStatus;
   applicationStatus: ApplicationStatus;
   appliedAt?: string;
+  tracking?: ApplicationTracking;
   createdAt: string;
   updatedAt: string;
 }

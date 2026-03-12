@@ -5,13 +5,14 @@ import { exportToExcel, importFromExcel, ImportResult } from '../../services/exc
 import { exportAllSessionsFile, downloadBlob, SessionBundle } from '../../services/sessionFile';
 import TrackerBoard from './TrackerBoard';
 import TrackerTable from './TrackerTable';
+import SankeyChart from './SankeyChart';
 import ApplicationDetailModal from './ApplicationDetailModal';
 
 interface Props {
   onBack: () => void;
 }
 
-type ViewMode = 'table' | 'board';
+type ViewMode = 'table' | 'board' | 'chart';
 
 const ACTIVE_STATUSES: ApplicationStatus[] = [
   'applied', 'phone-screen', 'interview-1', 'interview-2', 'interview-3', 'take-home',
@@ -311,6 +312,16 @@ export default function TrackerView({ onBack }: Props): JSX.Element {
           >
             Board
           </button>
+          <button
+            onClick={() => setViewMode('chart')}
+            className={`px-3 py-1.5 text-xs font-medium transition-colors ${
+              viewMode === 'chart'
+                ? 'bg-accent-blue text-dark-bg'
+                : 'text-text-secondary hover:text-text-primary hover:bg-dark-hover'
+            }`}
+          >
+            Flow
+          </button>
         </div>
       </div>
 
@@ -330,10 +341,12 @@ export default function TrackerView({ onBack }: Props): JSX.Element {
           <div className="bg-dark-surface border border-dark-border rounded-xl overflow-hidden">
             <TrackerTable bundles={filteredBundles} onSelectBundle={setSelectedBundle} />
           </div>
-        ) : (
+        ) : viewMode === 'board' ? (
           <div className="h-full">
             <TrackerBoard bundles={filteredBundles} onSelectBundle={setSelectedBundle} onStatusChange={handleStatusChange} />
           </div>
+        ) : (
+          <SankeyChart bundles={filteredBundles} />
         )}
       </main>
 

@@ -13,8 +13,10 @@
     "@hello-pangea/dnd": "^18.0.1",
     "axios": "^1.6.5",
     "exceljs": "^4.4.0",
+    "html-to-image": "^1.11.13",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "recharts": "^3.8.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.48",

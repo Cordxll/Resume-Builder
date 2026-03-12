@@ -3,7 +3,8 @@ import type { TailoredData, ParsedResume } from '../types';
 const PREFIX = '[API Contract]';
 
 function warn(type: string, field: string, got: unknown) {
-  console.warn(`${PREFIX} ${type}: field "${field}" invalid (got ${JSON.stringify(got)})`);
+  const gotStr = got === undefined ? 'undefined' : JSON.stringify(got) ?? 'null';
+  console.warn(`${PREFIX} ${type}: field "${field}" invalid (got ${gotStr})`);
 }
 
 function isObject(v: unknown): v is Record<string, unknown> {
@@ -18,17 +19,19 @@ function isNumber(v: unknown): v is number {
   return typeof v === 'number';
 }
 
-const MINIMAL_TAILORED: TailoredData = {
-  summary: { original: '', tailored: '', explanation: '' },
-  skills:  { original: '', tailored: '', explanation: '' },
-  jobs: [],
-  sections: [],
-};
+function minimalTailored(): TailoredData {
+  return {
+    summary: { original: '', tailored: '', explanation: '' },
+    skills:  { original: '', tailored: '', explanation: '' },
+    jobs: [],
+    sections: [],
+  };
+}
 
 export function validateTailoredData(data: unknown, source = 'api'): TailoredData {
   if (!isObject(data)) {
     console.warn(`${PREFIX} TailoredData from ${source}: expected object, got ${typeof data}. Using fallback.`);
-    return MINIMAL_TAILORED;
+    return minimalTailored();
   }
 
   const T = 'TailoredData';
@@ -92,12 +95,14 @@ export function validateTailoredData(data: unknown, source = 'api'): TailoredDat
   return data as unknown as TailoredData;
 }
 
-const MINIMAL_PARSED: ParsedResume = { sections: [] };
+function minimalParsed(): ParsedResume {
+  return { sections: [] };
+}
 
 export function validateParsedResume(data: unknown, source = 'api'): ParsedResume {
   if (!isObject(data)) {
     console.warn(`${PREFIX} ParsedResume from ${source}: expected object, got ${typeof data}. Using fallback.`);
-    return MINIMAL_PARSED;
+    return minimalParsed();
   }
 
   const T = 'ParsedResume';

@@ -37,18 +37,21 @@ export const api = {
 
       usageTracker.trackCall('parse-resume', true);
 
+      // Validate the raw response before any normalization so guards are reachable.
+      const raw = response.data;
+      validateParsedResume(raw, 'parse-resume');
+
       // Map the backend response to the ParsedResume interface.
       // Guard against the response being nested: { sections: { contact, sections[], raw_text } }
-      const data = response.data;
       const parsed =
-        Array.isArray(data.sections) ? data
-        : (data.sections && typeof data.sections === 'object' ? data.sections : data);
+        Array.isArray(raw.sections) ? raw
+        : (raw.sections && typeof raw.sections === 'object' ? raw.sections : raw);
 
-      return validateParsedResume({
+      return {
         contact: parsed.contact,
         sections: Array.isArray(parsed.sections) ? parsed.sections : [],
-        raw_text: parsed.raw_text || data.raw_text,
-      });
+        raw_text: parsed.raw_text || raw.raw_text,
+      };
     } catch (error) {
       usageTracker.trackCall('parse-resume', false);
       throw error;

@@ -2,6 +2,7 @@ import { useCallback } from 'react';
 import { UploadPage } from './components/UploadPage';
 import { AppShell } from './components/layout/AppShell';
 import { CenterPanel } from './components/layout/CenterPanel';
+import TrackerView from './components/tracker/TrackerView';
 import { AppProvider, useAppContext } from './context/AppContext';
 import { api } from './services/api';
 import { hasAnyApiKey } from './services/storage';
@@ -301,6 +302,10 @@ Only provide ONE improved version. The text inside quotes after "IMPROVED:" will
         </div>
       </div>
     );
+  }
+
+  if (currentView === 'tracker') {
+    return <TrackerView onBack={() => navigateToUpload()} />;
   }
 
   if (currentView === 'upload') {

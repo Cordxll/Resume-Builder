@@ -8,7 +8,7 @@ const generateId = () => `${Date.now()}-${Math.random().toString(36).substr(2, 9
 
 // State shape
 interface AppState {
-  currentView: 'upload' | 'workspace';
+  currentView: 'upload' | 'workspace' | 'tracker';
   currentSessionId: string | null;
 
   // Current session data
@@ -61,7 +61,7 @@ const initialState: AppState = {
 
 // Action types
 type Action =
-  | { type: 'SET_VIEW'; payload: 'upload' | 'workspace' }
+  | { type: 'SET_VIEW'; payload: 'upload' | 'workspace' | 'tracker' }
   | { type: 'START_SESSION'; payload: { sessionId: string; resume: ParsedResume; resumeText: string; jobDescription: string; tailoredData: TailoredData; chatMessages: ChatMessage[] } }
   | { type: 'RESTORE_SESSION'; payload: { sessionId: string; resume: ParsedResume; resumeText: string; jobDescription: string; tailoredData: TailoredData; acceptedChanges: AcceptedChanges; chatMessages: ChatMessage[]; editHistory?: Map<string, { originalTailored: string; editedValue?: string; isUndone?: boolean; timestamp: Date }> } }
   | { type: 'CLEAR_SESSION' }
@@ -322,6 +322,7 @@ interface AppContextValue {
   startNewSession: (resume: ParsedResume, resumeText: string, jobDescription: string, tailoredData: TailoredData, resumeName?: string) => Promise<void>;
   startSessionWithExistingResume: (resumeId: string, jobDescription: string, tailoredData: TailoredData, jobDescriptionId?: string) => Promise<void>;
   navigateToUpload: (keepSession?: boolean) => void;
+  navigateToTracker: () => void;
   resumeSession: (sessionId: string) => Promise<boolean>;
   getSavedSessions: () => Promise<SessionSummary[]>;
   getSavedResumes: () => Promise<SavedResumeSummary[]>;
@@ -571,6 +572,11 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       dispatch({ type: 'CLEAR_SESSION' });
     }
   }, [state.currentSessionId]);
+
+  // Navigate to tracker view
+  const navigateToTracker = useCallback(() => {
+    dispatch({ type: 'SET_VIEW', payload: 'tracker' });
+  }, []);
 
   // Resume an existing session
   const resumeSession = useCallback(async (sessionId: string): Promise<boolean> => {
@@ -1029,6 +1035,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     startNewSession,
     startSessionWithExistingResume,
     navigateToUpload,
+    navigateToTracker,
     resumeSession,
     getSavedSessions,
     getSavedResumes,

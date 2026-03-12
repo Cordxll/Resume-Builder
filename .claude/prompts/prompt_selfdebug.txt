@@ -1,0 +1,37 @@
+**Goal**: Create a testing and validation system to ensure frontend/backend data contract integrity and catch type mismatches early.
+
+**Current Problem**: 
+- The UI fails when displaying tailored resume data
+- Likely cause: frontend TypeScript types don't match the actual backend response structure
+
+**Requested Implementation**:
+
+1. **Backend Test Infrastructure** (`backend/tests/`)
+   - Create sample/fixture data that represents real API responses
+   - Add validation tests that ensure API endpoints return data matching documented schemas
+   - Export sample response fixtures that frontend can import for testing
+
+2. **Shared Contract Validation**
+   - Define the expected response shapes in a way both sides can reference
+   - Consider a `shared/` or `contracts/` folder with JSON schemas or sample payloads
+   - Backend tests validate responses against these contracts
+   - Frontend tests validate components can render these contracts
+
+3. **Frontend Type Safety** (`frontend/src/`)
+   - Verify TypeScript types in `types/index.ts` match actual backend responses
+   - Add runtime validation or type guards where API data enters the app
+   - Create test fixtures using real backend sample data
+
+4. **Diagnostic Steps** (do this first):
+   - Inspect the actual `/api/tailor-resume` response structure
+   - Compare against `TailoredData` type definition in `frontend/src/types/index.ts`
+   - Identify specific field mismatches causing the UI failure
+   - Log the exact error and the data shape received
+
+**Acceptance Criteria**:
+- Backend has a `tests/` folder with sample response fixtures
+- Frontend types match backend response structure exactly
+- A simple validation script or test can verify contract alignment
+- The tailored resume view renders without errors
+
+**Start by**: Diagnosing the current failure—read the frontend types, hit the API (or check logs), and identify the exact mismatch before implementing the test infrastructure.

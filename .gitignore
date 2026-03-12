@@ -209,6 +209,15 @@ __marimo__/
 # Git worktrees
 .worktrees/
 
+# macOS
+.DS_Store
+**/.DS_Store
+
+# Personal/binary sample files
+References/
+samples/*.docx
+samples/*.pdf
+
 # Frontend
 frontend/node_modules/
 frontend/dist/

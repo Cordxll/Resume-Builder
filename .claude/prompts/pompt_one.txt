@@ -1,0 +1,12 @@
+Using Subagents i would look to re-evaluate how objects are structured in my frontend and backend and restructure it.
+can you help me come up with a design implementation to do so also assume I dont know everything and push back.
+
+I think how my AI response is structed can be adjusted to be more flexible and how the resume results/tailor is as well can be restrucuted as well.
+
+Create a resume object with ai response atributes. the resume object will have sections and each section will have sub objects for bullet points. each bullet point will can have its on ai respnse as well
+I feel like there should be standard object types that can belong to a resume. like a summary section, skills, Job history/ experience, education and fill in the blank if i am missing anything else. also we might have to use 
+sematic scoring becasue not every resumne refers to these parts as the same thing and some dont even label these sections. 
+
+When sending the tailoring to the LLM i dont want to send each individual section but the entire thing like i am doing currently but have the response be returned in a way were we can programmtically map to the appropriate object.
+
+Also there are currently bugs where the resume bullet point updates are being applied to each section (not exactly) i feel like if we restructure than we shouldnt run into problems like this. 

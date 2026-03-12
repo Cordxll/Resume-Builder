@@ -1,0 +1,1518 @@
+[Debug] [vite] connecting... (client, line 495)
+[Debug] [vite] connected. (client, line 618)
+[Error] TypeError: resume.sections.map is not a function. (In 'resume.sections.map((s) => s.type)', 'resume.sections.map' is undefined)
+	LeftSidebar (LeftSidebar.tsx:22)
+	renderWithHooks (chunk-VKLKESE7.js:11548)
+	mountIndeterminateComponent (chunk-VKLKESE7.js:14926)
+	callCallback2 (chunk-VKLKESE7.js:3674)
+	dispatchEvent
+	invokeGuardedCallbackDev (chunk-VKLKESE7.js:3699)
+	invokeGuardedCallback (chunk-VKLKESE7.js:3733)
+	beginWork$1 (chunk-VKLKESE7.js:19765)
+	performUnitOfWork (chunk-VKLKESE7.js:19198)
+	workLoopSync (chunk-VKLKESE7.js:19137)
+	renderRootSync (chunk-VKLKESE7.js:19116)
+	performConcurrentWorkOnRoot (chunk-VKLKESE7.js:18678:98)
+	workLoop (chunk-VKLKESE7.js:197)
+	flushWork (chunk-VKLKESE7.js:176)
+	performWorkUntilDeadline (chunk-VKLKESE7.js:384)
+[Error] TypeError: resume.sections.map is not a function. (In 'resume.sections.map((section) => {
+    const accepted = acceptedChanges[section.type] ?? false;
+    if (section.type === "summary") {
+      const displayText = accepted ? tailoredData.summary?.tailored ?? section.content : section.content;
+      const summaryText = String(displayText || "");
+      const summaryExplanation = tailoredData.summary?.explanation;
+      if (!summaryText.trim()) return null;
+      return /* @__PURE__ */ jsxDEV(
+        ResumeSectionCard,
+        {
+          id: "summary",
+          title: section.rawLabel || "Summary",
+          isActive: activeSection === "summary",
+          isTailored: accepted,
+          onEdit: (content) => onEditContent("summary", null, null, content),
+          onAskAI: (prompt) => onAskAI?.(prompt, {
+            sectionType: "summary",
+            entryId: "",
+            bulletIndex: -1,
+            originalContent: summaryText,
+            isActive: true
+          }),
+          content: summaryText,
+          aiSuggestion: editContext?.sectionType === "summary" ? aiSuggestion : void 0,
+          aiExplanation: editContext?.sectionType === "summary" && aiExplanation || summaryExplanation,
+          canUndo: canUndo?.("summary"),
+          canRedo: canRedo?.("summary"),
+          onUndo: () => onUndo?.("summary", summaryText),
+          onRedo: () => onRedo?.("summary"),
+          editContext,
+          onStartSectionEdit: onStartEdit,
+          children: /* @__PURE__ */ jsxDEV("p", { className: "leading-relaxed", children: summaryText }, void 0, false, {
+            fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+            lineNumber: 473,
+            columnNumber: 11
+          }, this)
+        },
+        "summary",
+        false,
+        {
+          fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+          lineNumber: 445,
+          columnNumber: 9
+        },
+        this
+      );
+    }
+    if (section.type === "skills") {
+      const displayText = accepted ? tailoredData.skills?.tailored ?? section.content : section.content;
+      const skillsText = String(displayText || "");
+      const skillsExplanation = tailoredData.skills?.explanation;
+      if (!skillsText.trim()) return null;
+      return /* @__PURE__ */ jsxDEV(
+        ResumeSectionCard,
+        {
+          id: "skills",
+          title: section.rawLabel || "Skills",
+          isActive: activeSection === "skills",
+          isTailored: accepted,
+          onEdit: (content) => onEditContent("skills", null, null, content),
+          onAskAI: (prompt) => onAskAI?.(prompt, {
+            sectionType: "skills",
+            entryId: "",
+            bulletIndex: -1,
+            originalContent: skillsText,
+            isActive: true
+          }),
+          content: skillsText,
+          aiSuggestion: editContext?.sectionType === "skills" ? aiSuggestion : void 0,
+          aiExplanation: editContext?.sectionType === "skills" && aiExplanation || skillsExplanation,
+          canUndo: canUndo?.("skills"),
+          canRedo: canRedo?.("skills"),
+          onUndo: () => onUndo?.("skills", skillsText),
+          onRedo: () => onRedo?.("skills"),
+          editContext,
+          onStartSectionEdit: onStartEdit,
+          children: /* @__PURE__ */ jsxDEV("p", { className: "leading-relaxed", children: skillsText }, void 0, false, {
+            fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+            lineNumber: 517,
+            columnNumber: 11
+          }, this)
+        },
+        "skills",
+        false,
+        {
+          fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+          lineNumber: 489,
+          columnNumber: 9
+        },
+        this
+      );
+    }
+    if (section.type === "experience") {
+      const expSection = section;
+      if (!expSection.jobs || expSection.jobs.length === 0) return null;
+      return /* @__PURE__ */ jsxDEV(
+        ResumeSectionCard,
+        {
+          id: "experience",
+          title: section.rawLabel || "Experience",
+          isActive: activeSection === "experience",
+          isTailored: accepted,
+          children: /* @__PURE__ */ jsxDEV("div", { className: "space-y-6", children: expSection.jobs.map((job, jobIdx) => {
+            const tailoredJob = tailoredData.jobs?.find((j) => j.id === job.id);
+            return /* @__PURE__ */ jsxDEV("div", { className: jobIdx > 0 ? "pt-4 border-t border-dark-border" : "", children: [
+              /* @__PURE__ */ jsxDEV("div", { className: "mb-3", children: /* @__PURE__ */ jsxDEV("div", { className: "flex items-start justify-between", children: [
+                /* @__PURE__ */ jsxDEV("div", { children: [
+                  /* @__PURE__ */ jsxDEV("h4", { className: "font-medium text-text-primary", children: job.company }, void 0, false, {
+                    fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                    lineNumber: 545,
+                    columnNumber: 25
+                  }, this),
+                  job.title && /* @__PURE__ */ jsxDEV("p", { className: "text-sm text-text-secondary", children: job.title }, void 0, false, {
+                    fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                    lineNumber: 547,
+                    columnNumber: 25
+                  }, this)
+                ] }, void 0, true, {
+                  fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                  lineNumber: 544,
+                  columnNumber: 23
+                }, this),
+                /* @__PURE__ */ jsxDEV("div", { className: "text-right text-sm text-text-muted", children: [
+                  job.dates && /* @__PURE__ */ jsxDEV("div", { children: job.dates }, void 0, false, {
+                    fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                    lineNumber: 551,
+                    columnNumber: 39
+                  }, this),
+                  job.location && /* @__PURE__ */ jsxDEV("div", { children: job.location }, void 0, false, {
+                    fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                    lineNumber: 552,
+                    columnNumber: 42
+                  }, this)
+                ] }, void 0, true, {
+                  fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                  lineNumber: 550,
+                  columnNumber: 23
+                }, this)
+              ] }, void 0, true, {
+                fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                lineNumber: 543,
+                columnNumber: 21
+              }, this) }, void 0, false, {
+                fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                lineNumber: 542,
+                columnNumber: 19
+              }, this),
+              job.bullets && job.bullets.length > 0 && /* @__PURE__ */ jsxDEV("ul", { className: "space-y-3", children: job.bullets.map((bullet) => {
+                const tailoredBullet = accepted && tailoredJob ? tailoredJob.bullets.find((b) => b.index === bullet.index) : void 0;
+                const displayText = tailoredBullet ? tailoredBullet.tailored : bullet.text;
+                const bulletExplanation = tailoredBullet?.explanation;
+                const editKey = `experience:${job.id}:${bullet.index}`;
+                const cachedExplanation = bulletAICacheRef.current.get(editKey)?.explanation;
+                const isEditingThis = isBulletEditing("experience", job.id, bullet.index);
+                const aiIsForThisBullet = isEditingThis && aiResponseBelongsToBullet("experience", job.id, bullet.index);
+                return /* @__PURE__ */ jsxDEV(
+                  EditableBullet,
+                  {
+                    bullet: displayText,
+                    isEditing: isEditingThis,
+                    editedText: editingState?.editedText ?? displayText,
+                    onStartEdit: () => handleStartBulletEdit("experience", job.id, bullet.index, displayText),
+                    onTextChange: handleTextChange,
+                    onSave: () => handleSaveBullet("experience", job.id, bullet.index),
+                    onCancel: handleEditComplete,
+                    onAskAI: (prompt) => handleAskAI(prompt, "experience", job.id, bullet.index, displayText),
+                    aiSuggestion: aiIsForThisBullet ? aiSuggestion : void 0,
+                    aiExplanation: aiIsForThisBullet && aiExplanation || cachedExplanation || bulletExplanation,
+                    canUndo: canUndo?.(editKey),
+                    canRedo: canRedo?.(editKey),
+                    onUndo: () => onUndo?.(editKey, displayText),
+                    onRedo: () => onRedo?.(editKey)
+                  },
+                  bullet.index,
+                  false,
+                  {
+                    fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                    lineNumber: 573,
+                    columnNumber: 25
+                  },
+                  this
+                );
+              }) }, void 0, false, {
+                fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                lineNumber: 559,
+                columnNumber: 19
+              }, this)
+            ] }, job.id, true, {
+              fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+              lineNumber: 540,
+              columnNumber: 17
+            }, this);
+          }) }, void 0, false, {
+            fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+            lineNumber: 535,
+            columnNumber: 11
+          }, this)
+        },
+        "experience",
+        false,
+        {
+          fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+          lineNumber: 528,
+          columnNumber: 9
+        },
+        this
+      );
+    }
+    if (section.type === "education") {
+      const eduSection = section;
+      if (!eduSection.entries || eduSection.entries.length === 0) return null;
+      const tailoredSection = tailoredData.sections?.find((s) => s.sectionType === "education");
+      return /* @__PURE__ */ jsxDEV(
+        ResumeSectionCard,
+        {
+          id: "education",
+          title: section.rawLabel || "Education",
+          isActive: activeSection === "education",
+          isTailored: accepted,
+          children: /* @__PURE__ */ jsxDEV("div", { className: "space-y-4", children: eduSection.entries.map((entry, entryIdx) => {
+            const tailoredEntry = accepted && tailoredSection ? tailoredSection.entries.find((e) => e.id === entry.id) : void 0;
+            return /* @__PURE__ */ jsxDEV("div", { className: entryIdx > 0 ? "pt-3 border-t border-dark-border" : "", children: [
+              /* @__PURE__ */ jsxDEV("div", { className: "flex items-start justify-between mb-1", children: [
+                /* @__PURE__ */ jsxDEV("div", { children: [
+                  /* @__PURE__ */ jsxDEV("h4", { className: "font-medium text-text-primary", children: entry.institution }, void 0, false, {
+                    fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                    lineNumber: 635,
+                    columnNumber: 23
+                  }, this),
+                  (entry.degree || entry.field) && /* @__PURE__ */ jsxDEV("p", { className: "text-sm text-text-secondary", children: [
+                    entry.degree,
+                    entry.field ? `, ${entry.field}` : ""
+                  ] }, void 0, true, {
+                    fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                    lineNumber: 637,
+                    columnNumber: 23
+                  }, this)
+                ] }, void 0, true, {
+                  fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                  lineNumber: 634,
+                  columnNumber: 21
+                }, this),
+                entry.dates && /* @__PURE__ */ jsxDEV("div", { className: "text-sm text-text-muted", children: entry.dates }, void 0, false, {
+                  fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                  lineNumber: 643,
+                  columnNumber: 21
+                }, this)
+              ] }, void 0, true, {
+                fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                lineNumber: 633,
+                columnNumber: 19
+              }, this),
+              entry.bullets && entry.bullets.length > 0 && /* @__PURE__ */ jsxDEV("ul", { className: "space-y-2 mt-2", children: entry.bullets.map((bullet) => {
+                const tailoredBullet = tailoredEntry ? tailoredEntry.bullets.find((b) => b.index === bullet.index) : void 0;
+                const displayText = tailoredBullet ? tailoredBullet.tailored : bullet.text;
+                const editKey = `education:${entry.id}:${bullet.index}`;
+                const cachedExplanation = bulletAICacheRef.current.get(editKey)?.explanation;
+                const isEditingThis = isBulletEditing("education", entry.id, bullet.index);
+                const aiIsForThisBullet = isEditingThis && aiResponseBelongsToBullet("education", entry.id, bullet.index);
+                return /* @__PURE__ */ jsxDEV(
+                  EditableBullet,
+                  {
+                    bullet: displayText,
+                    isEditing: isEditingThis,
+                    editedText: editingState?.editedText ?? displayText,
+                    onStartEdit: () => handleStartBulletEdit("education", entry.id, bullet.index, displayText),
+                    onTextChange: handleTextChange,
+                    onSave: () => handleSaveBullet("education", entry.id, bullet.index),
+                    onCancel: handleEditComplete,
+                    onAskAI: (prompt) => handleAskAI(prompt, "education", entry.id, bullet.index, displayText),
+                    aiSuggestion: aiIsForThisBullet ? aiSuggestion : void 0,
+                    aiExplanation: aiIsForThisBullet && aiExplanation || cachedExplanation || tailoredBullet?.explanation,
+                    canUndo: canUndo?.(editKey),
+                    canRedo: canRedo?.(editKey),
+                    onUndo: () => onUndo?.(editKey, displayText),
+                    onRedo: () => onRedo?.(editKey)
+                  },
+                  bullet.index,
+                  false,
+                  {
+                    fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                    lineNumber: 660,
+                    columnNumber: 25
+                  },
+                  this
+                );
+              }) }, void 0, false, {
+                fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                lineNumber: 647,
+                columnNumber: 19
+              }, this)
+            ] }, entry.id, true, {
+              fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+              lineNumber: 632,
+              columnNumber: 17
+            }, this);
+          }) }, void 0, false, {
+            fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+            lineNumber: 625,
+            columnNumber: 11
+          }, this)
+        },
+        "education",
+        false,
+        {
+          fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+          lineNumber: 618,
+          columnNumber: 9
+        },
+        this
+      );
+    }
+    if (section.type === "projects") {
+      const projSection = section;
+      if (!projSection.entries || projSection.entries.length === 0) return null;
+      const tailoredSection = tailoredData.sections?.find((s) => s.sectionType === "projects");
+      return /* @__PURE__ */ jsxDEV(
+        ResumeSectionCard,
+        {
+          id: "projects",
+          title: section.rawLabel || "Projects",
+          isActive: activeSection === "projects",
+          isTailored: accepted,
+          children: /* @__PURE__ */ jsxDEV("div", { className: "space-y-4", children: projSection.entries.map((entry, entryIdx) => {
+            const tailoredEntry = accepted && tailoredSection ? tailoredSection.entries.find((e) => e.id === entry.id) : void 0;
+            return /* @__PURE__ */ jsxDEV("div", { className: entryIdx > 0 ? "pt-3 border-t border-dark-border" : "", children: [
+              /* @__PURE__ */ jsxDEV("div", { className: "flex items-start justify-between mb-1", children: [
+                /* @__PURE__ */ jsxDEV("h4", { className: "font-medium text-text-primary", children: entry.name }, void 0, false, {
+                  fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                  lineNumber: 721,
+                  columnNumber: 21
+                }, this),
+                entry.dates && /* @__PURE__ */ jsxDEV("div", { className: "text-sm text-text-muted", children: entry.dates }, void 0, false, {
+                  fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                  lineNumber: 723,
+                  columnNumber: 21
+                }, this)
+              ] }, void 0, true, {
+                fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                lineNumber: 720,
+                columnNumber: 19
+              }, this),
+              entry.description && /* @__PURE__ */ jsxDEV("p", { className: "text-sm text-text-secondary mb-2", children: entry.description }, void 0, false, {
+                fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                lineNumber: 727,
+                columnNumber: 19
+              }, this),
+              entry.bullets && entry.bullets.length > 0 && /* @__PURE__ */ jsxDEV("ul", { className: "space-y-2", children: entry.bullets.map((bullet) => {
+                const tailoredBullet = tailoredEntry ? tailoredEntry.bullets.find((b) => b.index === bullet.index) : void 0;
+                const displayText = tailoredBullet ? tailoredBullet.tailored : bullet.text;
+                const editKey = `projects:${entry.id}:${bullet.index}`;
+                const cachedExplanation = bulletAICacheRef.current.get(editKey)?.explanation;
+                const isEditingThis = isBulletEditing("projects", entry.id, bullet.index);
+                const aiIsForThisBullet = isEditingThis && aiResponseBelongsToBullet("projects", entry.id, bullet.index);
+                return /* @__PURE__ */ jsxDEV(
+                  EditableBullet,
+                  {
+                    bullet: displayText,
+                    isEditing: isEditingThis,
+                    editedText: editingState?.editedText ?? displayText,
+                    onStartEdit: () => handleStartBulletEdit("projects", entry.id, bullet.index, displayText),
+                    onTextChange: handleTextChange,
+                    onSave: () => handleSaveBullet("projects", entry.id, bullet.index),
+                    onCancel: handleEditComplete,
+                    onAskAI: (prompt) => handleAskAI(prompt, "projects", entry.id, bullet.index, displayText),
+                    aiSuggestion: aiIsForThisBullet ? aiSuggestion : void 0,
+                    aiExplanation: aiIsForThisBullet && aiExplanation || cachedExplanation || tailoredBullet?.explanation,
+                    canUndo: canUndo?.(editKey),
+                    canRedo: canRedo?.(editKey),
+                    onUndo: () => onUndo?.(editKey, displayText),
+                    onRedo: () => onRedo?.(editKey)
+                  },
+                  bullet.index,
+                  false,
+                  {
+                    fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                    lineNumber: 743,
+                    columnNumber: 25
+                  },
+                  this
+                );
+              }) }, void 0, false, {
+                fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                lineNumber: 730,
+                columnNumber: 19
+              }, this)
+            ] }, entry.id, true, {
+              fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+              lineNumber: 719,
+              columnNumber: 17
+            }, this);
+          }) }, void 0, false, {
+            fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+            lineNumber: 712,
+            columnNumber: 11
+          }, this)
+        },
+        "projects",
+        false,
+        {
+          fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+          lineNumber: 705,
+          columnNumber: 9
+        },
+        this
+      );
+    }
+    if (section.type === "certifications") {
+      const certSection = section;
+      if (!certSection.entries || certSection.entries.length === 0) return null;
+      const tailoredSection = tailoredData.sections?.find((s) => s.sectionType === "certifications");
+      return /* @__PURE__ */ jsxDEV(
+        ResumeSectionCard,
+        {
+          id: "certifications",
+          title: section.rawLabel || "Certifications",
+          isActive: activeSection === "certifications",
+          isTailored: accepted,
+          children: /* @__PURE__ */ jsxDEV("div", { className: "space-y-3", children: certSection.entries.map((entry, entryIdx) => {
+            const tailoredEntry = accepted && tailoredSection ? tailoredSection.entries.find((e) => e.id === entry.id) : void 0;
+            return /* @__PURE__ */ jsxDEV("div", { className: entryIdx > 0 ? "pt-2 border-t border-dark-border" : "", children: [
+              /* @__PURE__ */ jsxDEV("div", { className: "flex items-start justify-between", children: [
+                /* @__PURE__ */ jsxDEV("div", { children: [
+                  /* @__PURE__ */ jsxDEV("p", { className: "font-medium text-text-primary text-sm", children: entry.name }, void 0, false, {
+                    fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                    lineNumber: 805,
+                    columnNumber: 23
+                  }, this),
+                  entry.issuer && /* @__PURE__ */ jsxDEV("p", { className: "text-xs text-text-secondary", children: entry.issuer }, void 0, false, {
+                    fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                    lineNumber: 807,
+                    columnNumber: 23
+                  }, this)
+                ] }, void 0, true, {
+                  fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                  lineNumber: 804,
+                  columnNumber: 21
+                }, this),
+                entry.date && /* @__PURE__ */ jsxDEV("div", { className: "text-xs text-text-muted", children: entry.date }, void 0, false, {
+                  fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                  lineNumber: 811,
+                  columnNumber: 21
+                }, this)
+              ] }, void 0, true, {
+                fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                lineNumber: 803,
+                columnNumber: 19
+              }, this),
+              entry.bullets && entry.bullets.length > 0 && /* @__PURE__ */ jsxDEV("ul", { className: "space-y-2 mt-2", children: entry.bullets.map((bullet) => {
+                const tailoredBullet = tailoredEntry ? tailoredEntry.bullets.find((b) => b.index === bullet.index) : void 0;
+                const displayText = tailoredBullet ? tailoredBullet.tailored : bullet.text;
+                const editKey = `certifications:${entry.id}:${bullet.index}`;
+                const cachedExplanation = bulletAICacheRef.current.get(editKey)?.explanation;
+                const isEditingThis = isBulletEditing("certifications", entry.id, bullet.index);
+                const aiIsForThisBullet = isEditingThis && aiResponseBelongsToBullet("certifications", entry.id, bullet.index);
+                return /* @__PURE__ */ jsxDEV(
+                  EditableBullet,
+                  {
+                    bullet: displayText,
+                    isEditing: isEditingThis,
+                    editedText: editingState?.editedText ?? displayText,
+                    onStartEdit: () => handleStartBulletEdit(
+                      "certifications",
+                      entry.id,
+                      bullet.index,
+                      displayText
+                    ),
+                    onTextChange: handleTextChange,
+                    onSave: () => handleSaveBullet("certifications", entry.id, bullet.index),
+                    onCancel: handleEditComplete,
+                    onAskAI: (prompt) => handleAskAI(
+                      prompt,
+                      "certifications",
+                      entry.id,
+                      bullet.index,
+                      displayText
+                    ),
+                    aiSuggestion: aiIsForThisBullet ? aiSuggestion : void 0,
+                    aiExplanation: aiIsForThisBullet && aiExplanation || cachedExplanation || tailoredBullet?.explanation,
+                    canUndo: canUndo?.(editKey),
+                    canRedo: canRedo?.(editKey),
+                    onUndo: () => onUndo?.(editKey, displayText),
+                    onRedo: () => onRedo?.(editKey)
+                  },
+                  bullet.index,
+                  false,
+                  {
+                    fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                    lineNumber: 829,
+                    columnNumber: 25
+                  },
+                  this
+                );
+              }) }, void 0, false, {
+                fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                lineNumber: 815,
+                columnNumber: 19
+              }, this)
+            ] }, entry.id, true, {
+              fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+              lineNumber: 802,
+              columnNumber: 17
+            }, this);
+          }) }, void 0, false, {
+            fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+            lineNumber: 795,
+            columnNumber: 11
+          }, this)
+        },
+        "certifications",
+        false,
+        {
+          fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+          lineNumber: 788,
+          columnNumber: 9
+        },
+        this
+      );
+    }
+    if (section.type === "awards") {
+      const awardsSection = section;
+      if (!awardsSection.entries || awardsSection.entries.length === 0) return null;
+      const tailoredSection = tailoredData.sections?.find((s) => s.sectionType === "awards");
+      return /* @__PURE__ */ jsxDEV(
+        ResumeSectionCard,
+        {
+          id: "awards",
+          title: section.rawLabel || "Awards",
+          isActive: activeSection === "awards",
+          isTailored: accepted,
+          children: /* @__PURE__ */ jsxDEV("div", { className: "space-y-3", children: awardsSection.entries.map((entry, entryIdx) => {
+            const tailoredEntry = accepted && tailoredSection ? tailoredSection.entries.find((e) => e.id === entry.id) : void 0;
+            return /* @__PURE__ */ jsxDEV("div", { className: entryIdx > 0 ? "pt-2 border-t border-dark-border" : "", children: [
+              /* @__PURE__ */ jsxDEV("div", { className: "flex items-start justify-between", children: [
+                /* @__PURE__ */ jsxDEV("div", { children: [
+                  /* @__PURE__ */ jsxDEV("p", { className: "font-medium text-text-primary text-sm", children: entry.name }, void 0, false, {
+                    fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                    lineNumber: 904,
+                    columnNumber: 23
+                  }, this),
+                  entry.issuer && /* @__PURE__ */ jsxDEV("p", { className: "text-xs text-text-secondary", children: entry.issuer }, void 0, false, {
+                    fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                    lineNumber: 906,
+                    columnNumber: 23
+                  }, this)
+                ] }, void 0, true, {
+                  fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                  lineNumber: 903,
+                  columnNumber: 21
+                }, this),
+                entry.date && /* @__PURE__ */ jsxDEV("div", { className: "text-xs text-text-muted", children: entry.date }, void 0, false, {
+                  fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                  lineNumber: 910,
+                  columnNumber: 21
+                }, this)
+              ] }, void 0, true, {
+                fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                lineNumber: 902,
+                columnNumber: 19
+              }, this),
+              entry.bullets && entry.bullets.length > 0 && /* @__PURE__ */ jsxDEV("ul", { className: "space-y-2 mt-2", children: entry.bullets.map((bullet) => {
+                const tailoredBullet = tailoredEntry ? tailoredEntry.bullets.find((b) => b.index === bullet.index) : void 0;
+                const displayText = tailoredBullet ? tailoredBullet.tailored : bullet.text;
+                const editKey = `awards:${entry.id}:${bullet.index}`;
+                const cachedExplanation = bulletAICacheRef.current.get(editKey)?.explanation;
+                const isEditingThis = isBulletEditing("awards", entry.id, bullet.index);
+                const aiIsForThisBullet = isEditingThis && aiResponseBelongsToBullet("awards", entry.id, bullet.index);
+                return /* @__PURE__ */ jsxDEV(
+                  EditableBullet,
+                  {
+                    bullet: displayText,
+                    isEditing: isEditingThis,
+                    editedText: editingState?.editedText ?? displayText,
+                    onStartEdit: () => handleStartBulletEdit("awards", entry.id, bullet.index, displayText),
+                    onTextChange: handleTextChange,
+                    onSave: () => handleSaveBullet("awards", entry.id, bullet.index),
+                    onCancel: handleEditComplete,
+                    onAskAI: (prompt) => handleAskAI(prompt, "awards", entry.id, bullet.index, displayText),
+                    aiSuggestion: aiIsForThisBullet ? aiSuggestion : void 0,
+                    aiExplanation: aiIsForThisBullet && aiExplanation || cachedExplanation || tailoredBullet?.explanation,
+                    canUndo: canUndo?.(editKey),
+                    canRedo: canRedo?.(editKey),
+                    onUndo: () => onUndo?.(editKey, displayText),
+                    onRedo: () => onRedo?.(editKey)
+                  },
+                  bullet.index,
+                  false,
+                  {
+                    fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                    lineNumber: 927,
+                    columnNumber: 25
+                  },
+                  this
+                );
+              }) }, void 0, false, {
+                fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                lineNumber: 914,
+                columnNumber: 19
+              }, this)
+            ] }, entry.id, true, {
+              fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+              lineNumber: 901,
+              columnNumber: 17
+            }, this);
+          }) }, void 0, false, {
+            fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+            lineNumber: 894,
+            columnNumber: 11
+          }, this)
+        },
+        "awards",
+        false,
+        {
+          fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+          lineNumber: 887,
+          columnNumber: 9
+        },
+        this
+      );
+    }
+    if (section.type === "volunteer" || section.type === "languages" || section.type === "contact" || section.type === "unknown") {
+      const genSection = section;
+      const hasGenericContent = genSection.content && genSection.content.trim() || genSection.entries && genSection.entries.length > 0;
+      if (!hasGenericContent) return null;
+      const sectionId = section.type === "contact" ? "contact-section" : section.type;
+      return /* @__PURE__ */ jsxDEV(
+        ResumeSectionCard,
+        {
+          id: sectionId,
+          title: section.rawLabel || section.type,
+          isActive: activeSection === sectionId,
+          children: genSection.content ? /* @__PURE__ */ jsxDEV("p", { className: "leading-relaxed", children: genSection.content }, void 0, false, {
+            fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+            lineNumber: 987,
+            columnNumber: 11
+          }, this) : /* @__PURE__ */ jsxDEV("div", { className: "space-y-2", children: genSection.entries?.map(
+            (entry) => /* @__PURE__ */ jsxDEV("div", { children: [
+              entry.name && /* @__PURE__ */ jsxDEV("p", { className: "font-medium text-text-primary text-sm", children: entry.name }, void 0, false, {
+                fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                lineNumber: 993,
+                columnNumber: 15
+              }, this),
+              entry.content && /* @__PURE__ */ jsxDEV("p", { className: "text-sm text-text-secondary", children: entry.content }, void 0, false, {
+                fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                lineNumber: 996,
+                columnNumber: 15
+              }, this),
+              entry.bullets && entry.bullets.length > 0 && /* @__PURE__ */ jsxDEV("ul", { className: "space-y-1 mt-1", children: entry.bullets.map(
+                (b) => /* @__PURE__ */ jsxDEV("li", { className: "flex items-start gap-2", children: [
+                  /* @__PURE__ */ jsxDEV("span", { className: "text-accent-blue mt-1.5 text-[10px] flex-shrink-0", children: "●" }, void 0, false, {
+                    fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                    lineNumber: 1002,
+                    columnNumber: 27
+                  }, this),
+                  /* @__PURE__ */ jsxDEV("span", { className: "text-sm leading-relaxed", children: b.text }, void 0, false, {
+                    fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                    lineNumber: 1003,
+                    columnNumber: 27
+                  }, this)
+                ] }, b.index, true, {
+                  fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                  lineNumber: 1001,
+                  columnNumber: 17
+                }, this)
+              ) }, void 0, false, {
+                fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                lineNumber: 999,
+                columnNumber: 15
+              }, this)
+            ] }, entry.id, true, {
+              fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+              lineNumber: 991,
+              columnNumber: 13
+            }, this)
+          ) }, void 0, false, {
+            fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+            lineNumber: 989,
+            columnNumber: 11
+          }, this)
+        },
+        sectionId,
+        false,
+        {
+          fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+          lineNumber: 980,
+          columnNumber: 9
+        },
+        this
+      );
+    }
+    return null;
+  })', 'resume.sections.map' is undefined)
+	ResumePreview (ResumePreview.tsx:403)
+	renderWithHooks (chunk-VKLKESE7.js:11548)
+	mountIndeterminateComponent (chunk-VKLKESE7.js:14926)
+	callCallback2 (chunk-VKLKESE7.js:3674)
+	dispatchEvent
+	invokeGuardedCallbackDev (chunk-VKLKESE7.js:3699)
+	invokeGuardedCallback (chunk-VKLKESE7.js:3733)
+	beginWork$1 (chunk-VKLKESE7.js:19765)
+	performUnitOfWork (chunk-VKLKESE7.js:19198)
+	workLoopSync (chunk-VKLKESE7.js:19137)
+	renderRootSync (chunk-VKLKESE7.js:19116)
+	performConcurrentWorkOnRoot (chunk-VKLKESE7.js:18678:98)
+	workLoop (chunk-VKLKESE7.js:197)
+	flushWork (chunk-VKLKESE7.js:176)
+	performWorkUntilDeadline (chunk-VKLKESE7.js:384)
+[Error] TypeError: resume.sections.map is not a function. (In 'resume.sections.map((s) => s.type)', 'resume.sections.map' is undefined)
+	LeftSidebar (LeftSidebar.tsx:22)
+	renderWithHooks (chunk-VKLKESE7.js:11548)
+	mountIndeterminateComponent (chunk-VKLKESE7.js:14926)
+	callCallback2 (chunk-VKLKESE7.js:3674)
+	dispatchEvent
+	invokeGuardedCallbackDev (chunk-VKLKESE7.js:3699)
+	invokeGuardedCallback (chunk-VKLKESE7.js:3733)
+	beginWork$1 (chunk-VKLKESE7.js:19765)
+	performUnitOfWork (chunk-VKLKESE7.js:19198)
+	workLoopSync (chunk-VKLKESE7.js:19137)
+	renderRootSync (chunk-VKLKESE7.js:19116)
+	recoverFromConcurrentError (chunk-VKLKESE7.js:18736)
+	performConcurrentWorkOnRoot (chunk-VKLKESE7.js:18684)
+	workLoop (chunk-VKLKESE7.js:197)
+	flushWork (chunk-VKLKESE7.js:176)
+	performWorkUntilDeadline (chunk-VKLKESE7.js:384)
+[Error] TypeError: resume.sections.map is not a function. (In 'resume.sections.map((section) => {
+    const accepted = acceptedChanges[section.type] ?? false;
+    if (section.type === "summary") {
+      const displayText = accepted ? tailoredData.summary?.tailored ?? section.content : section.content;
+      const summaryText = String(displayText || "");
+      const summaryExplanation = tailoredData.summary?.explanation;
+      if (!summaryText.trim()) return null;
+      return /* @__PURE__ */ jsxDEV(
+        ResumeSectionCard,
+        {
+          id: "summary",
+          title: section.rawLabel || "Summary",
+          isActive: activeSection === "summary",
+          isTailored: accepted,
+          onEdit: (content) => onEditContent("summary", null, null, content),
+          onAskAI: (prompt) => onAskAI?.(prompt, {
+            sectionType: "summary",
+            entryId: "",
+            bulletIndex: -1,
+            originalContent: summaryText,
+            isActive: true
+          }),
+          content: summaryText,
+          aiSuggestion: editContext?.sectionType === "summary" ? aiSuggestion : void 0,
+          aiExplanation: editContext?.sectionType === "summary" && aiExplanation || summaryExplanation,
+          canUndo: canUndo?.("summary"),
+          canRedo: canRedo?.("summary"),
+          onUndo: () => onUndo?.("summary", summaryText),
+          onRedo: () => onRedo?.("summary"),
+          editContext,
+          onStartSectionEdit: onStartEdit,
+          children: /* @__PURE__ */ jsxDEV("p", { className: "leading-relaxed", children: summaryText }, void 0, false, {
+            fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+            lineNumber: 473,
+            columnNumber: 11
+          }, this)
+        },
+        "summary",
+        false,
+        {
+          fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+          lineNumber: 445,
+          columnNumber: 9
+        },
+        this
+      );
+    }
+    if (section.type === "skills") {
+      const displayText = accepted ? tailoredData.skills?.tailored ?? section.content : section.content;
+      const skillsText = String(displayText || "");
+      const skillsExplanation = tailoredData.skills?.explanation;
+      if (!skillsText.trim()) return null;
+      return /* @__PURE__ */ jsxDEV(
+        ResumeSectionCard,
+        {
+          id: "skills",
+          title: section.rawLabel || "Skills",
+          isActive: activeSection === "skills",
+          isTailored: accepted,
+          onEdit: (content) => onEditContent("skills", null, null, content),
+          onAskAI: (prompt) => onAskAI?.(prompt, {
+            sectionType: "skills",
+            entryId: "",
+            bulletIndex: -1,
+            originalContent: skillsText,
+            isActive: true
+          }),
+          content: skillsText,
+          aiSuggestion: editContext?.sectionType === "skills" ? aiSuggestion : void 0,
+          aiExplanation: editContext?.sectionType === "skills" && aiExplanation || skillsExplanation,
+          canUndo: canUndo?.("skills"),
+          canRedo: canRedo?.("skills"),
+          onUndo: () => onUndo?.("skills", skillsText),
+          onRedo: () => onRedo?.("skills"),
+          editContext,
+          onStartSectionEdit: onStartEdit,
+          children: /* @__PURE__ */ jsxDEV("p", { className: "leading-relaxed", children: skillsText }, void 0, false, {
+            fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+            lineNumber: 517,
+            columnNumber: 11
+          }, this)
+        },
+        "skills",
+        false,
+        {
+          fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+          lineNumber: 489,
+          columnNumber: 9
+        },
+        this
+      );
+    }
+    if (section.type === "experience") {
+      const expSection = section;
+      if (!expSection.jobs || expSection.jobs.length === 0) return null;
+      return /* @__PURE__ */ jsxDEV(
+        ResumeSectionCard,
+        {
+          id: "experience",
+          title: section.rawLabel || "Experience",
+          isActive: activeSection === "experience",
+          isTailored: accepted,
+          children: /* @__PURE__ */ jsxDEV("div", { className: "space-y-6", children: expSection.jobs.map((job, jobIdx) => {
+            const tailoredJob = tailoredData.jobs?.find((j) => j.id === job.id);
+            return /* @__PURE__ */ jsxDEV("div", { className: jobIdx > 0 ? "pt-4 border-t border-dark-border" : "", children: [
+              /* @__PURE__ */ jsxDEV("div", { className: "mb-3", children: /* @__PURE__ */ jsxDEV("div", { className: "flex items-start justify-between", children: [
+                /* @__PURE__ */ jsxDEV("div", { children: [
+                  /* @__PURE__ */ jsxDEV("h4", { className: "font-medium text-text-primary", children: job.company }, void 0, false, {
+                    fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                    lineNumber: 545,
+                    columnNumber: 25
+                  }, this),
+                  job.title && /* @__PURE__ */ jsxDEV("p", { className: "text-sm text-text-secondary", children: job.title }, void 0, false, {
+                    fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                    lineNumber: 547,
+                    columnNumber: 25
+                  }, this)
+                ] }, void 0, true, {
+                  fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                  lineNumber: 544,
+                  columnNumber: 23
+                }, this),
+                /* @__PURE__ */ jsxDEV("div", { className: "text-right text-sm text-text-muted", children: [
+                  job.dates && /* @__PURE__ */ jsxDEV("div", { children: job.dates }, void 0, false, {
+                    fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                    lineNumber: 551,
+                    columnNumber: 39
+                  }, this),
+                  job.location && /* @__PURE__ */ jsxDEV("div", { children: job.location }, void 0, false, {
+                    fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                    lineNumber: 552,
+                    columnNumber: 42
+                  }, this)
+                ] }, void 0, true, {
+                  fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                  lineNumber: 550,
+                  columnNumber: 23
+                }, this)
+              ] }, void 0, true, {
+                fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                lineNumber: 543,
+                columnNumber: 21
+              }, this) }, void 0, false, {
+                fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                lineNumber: 542,
+                columnNumber: 19
+              }, this),
+              job.bullets && job.bullets.length > 0 && /* @__PURE__ */ jsxDEV("ul", { className: "space-y-3", children: job.bullets.map((bullet) => {
+                const tailoredBullet = accepted && tailoredJob ? tailoredJob.bullets.find((b) => b.index === bullet.index) : void 0;
+                const displayText = tailoredBullet ? tailoredBullet.tailored : bullet.text;
+                const bulletExplanation = tailoredBullet?.explanation;
+                const editKey = `experience:${job.id}:${bullet.index}`;
+                const cachedExplanation = bulletAICacheRef.current.get(editKey)?.explanation;
+                const isEditingThis = isBulletEditing("experience", job.id, bullet.index);
+                const aiIsForThisBullet = isEditingThis && aiResponseBelongsToBullet("experience", job.id, bullet.index);
+                return /* @__PURE__ */ jsxDEV(
+                  EditableBullet,
+                  {
+                    bullet: displayText,
+                    isEditing: isEditingThis,
+                    editedText: editingState?.editedText ?? displayText,
+                    onStartEdit: () => handleStartBulletEdit("experience", job.id, bullet.index, displayText),
+                    onTextChange: handleTextChange,
+                    onSave: () => handleSaveBullet("experience", job.id, bullet.index),
+                    onCancel: handleEditComplete,
+                    onAskAI: (prompt) => handleAskAI(prompt, "experience", job.id, bullet.index, displayText),
+                    aiSuggestion: aiIsForThisBullet ? aiSuggestion : void 0,
+                    aiExplanation: aiIsForThisBullet && aiExplanation || cachedExplanation || bulletExplanation,
+                    canUndo: canUndo?.(editKey),
+                    canRedo: canRedo?.(editKey),
+                    onUndo: () => onUndo?.(editKey, displayText),
+                    onRedo: () => onRedo?.(editKey)
+                  },
+                  bullet.index,
+                  false,
+                  {
+                    fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                    lineNumber: 573,
+                    columnNumber: 25
+                  },
+                  this
+                );
+              }) }, void 0, false, {
+                fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                lineNumber: 559,
+                columnNumber: 19
+              }, this)
+            ] }, job.id, true, {
+              fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+              lineNumber: 540,
+              columnNumber: 17
+            }, this);
+          }) }, void 0, false, {
+            fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+            lineNumber: 535,
+            columnNumber: 11
+          }, this)
+        },
+        "experience",
+        false,
+        {
+          fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+          lineNumber: 528,
+          columnNumber: 9
+        },
+        this
+      );
+    }
+    if (section.type === "education") {
+      const eduSection = section;
+      if (!eduSection.entries || eduSection.entries.length === 0) return null;
+      const tailoredSection = tailoredData.sections?.find((s) => s.sectionType === "education");
+      return /* @__PURE__ */ jsxDEV(
+        ResumeSectionCard,
+        {
+          id: "education",
+          title: section.rawLabel || "Education",
+          isActive: activeSection === "education",
+          isTailored: accepted,
+          children: /* @__PURE__ */ jsxDEV("div", { className: "space-y-4", children: eduSection.entries.map((entry, entryIdx) => {
+            const tailoredEntry = accepted && tailoredSection ? tailoredSection.entries.find((e) => e.id === entry.id) : void 0;
+            return /* @__PURE__ */ jsxDEV("div", { className: entryIdx > 0 ? "pt-3 border-t border-dark-border" : "", children: [
+              /* @__PURE__ */ jsxDEV("div", { className: "flex items-start justify-between mb-1", children: [
+                /* @__PURE__ */ jsxDEV("div", { children: [
+                  /* @__PURE__ */ jsxDEV("h4", { className: "font-medium text-text-primary", children: entry.institution }, void 0, false, {
+                    fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                    lineNumber: 635,
+                    columnNumber: 23
+                  }, this),
+                  (entry.degree || entry.field) && /* @__PURE__ */ jsxDEV("p", { className: "text-sm text-text-secondary", children: [
+                    entry.degree,
+                    entry.field ? `, ${entry.field}` : ""
+                  ] }, void 0, true, {
+                    fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                    lineNumber: 637,
+                    columnNumber: 23
+                  }, this)
+                ] }, void 0, true, {
+                  fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                  lineNumber: 634,
+                  columnNumber: 21
+                }, this),
+                entry.dates && /* @__PURE__ */ jsxDEV("div", { className: "text-sm text-text-muted", children: entry.dates }, void 0, false, {
+                  fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                  lineNumber: 643,
+                  columnNumber: 21
+                }, this)
+              ] }, void 0, true, {
+                fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                lineNumber: 633,
+                columnNumber: 19
+              }, this),
+              entry.bullets && entry.bullets.length > 0 && /* @__PURE__ */ jsxDEV("ul", { className: "space-y-2 mt-2", children: entry.bullets.map((bullet) => {
+                const tailoredBullet = tailoredEntry ? tailoredEntry.bullets.find((b) => b.index === bullet.index) : void 0;
+                const displayText = tailoredBullet ? tailoredBullet.tailored : bullet.text;
+                const editKey = `education:${entry.id}:${bullet.index}`;
+                const cachedExplanation = bulletAICacheRef.current.get(editKey)?.explanation;
+                const isEditingThis = isBulletEditing("education", entry.id, bullet.index);
+                const aiIsForThisBullet = isEditingThis && aiResponseBelongsToBullet("education", entry.id, bullet.index);
+                return /* @__PURE__ */ jsxDEV(
+                  EditableBullet,
+                  {
+                    bullet: displayText,
+                    isEditing: isEditingThis,
+                    editedText: editingState?.editedText ?? displayText,
+                    onStartEdit: () => handleStartBulletEdit("education", entry.id, bullet.index, displayText),
+                    onTextChange: handleTextChange,
+                    onSave: () => handleSaveBullet("education", entry.id, bullet.index),
+                    onCancel: handleEditComplete,
+                    onAskAI: (prompt) => handleAskAI(prompt, "education", entry.id, bullet.index, displayText),
+                    aiSuggestion: aiIsForThisBullet ? aiSuggestion : void 0,
+                    aiExplanation: aiIsForThisBullet && aiExplanation || cachedExplanation || tailoredBullet?.explanation,
+                    canUndo: canUndo?.(editKey),
+                    canRedo: canRedo?.(editKey),
+                    onUndo: () => onUndo?.(editKey, displayText),
+                    onRedo: () => onRedo?.(editKey)
+                  },
+                  bullet.index,
+                  false,
+                  {
+                    fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                    lineNumber: 660,
+                    columnNumber: 25
+                  },
+                  this
+                );
+              }) }, void 0, false, {
+                fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                lineNumber: 647,
+                columnNumber: 19
+              }, this)
+            ] }, entry.id, true, {
+              fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+              lineNumber: 632,
+              columnNumber: 17
+            }, this);
+          }) }, void 0, false, {
+            fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+            lineNumber: 625,
+            columnNumber: 11
+          }, this)
+        },
+        "education",
+        false,
+        {
+          fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+          lineNumber: 618,
+          columnNumber: 9
+        },
+        this
+      );
+    }
+    if (section.type === "projects") {
+      const projSection = section;
+      if (!projSection.entries || projSection.entries.length === 0) return null;
+      const tailoredSection = tailoredData.sections?.find((s) => s.sectionType === "projects");
+      return /* @__PURE__ */ jsxDEV(
+        ResumeSectionCard,
+        {
+          id: "projects",
+          title: section.rawLabel || "Projects",
+          isActive: activeSection === "projects",
+          isTailored: accepted,
+          children: /* @__PURE__ */ jsxDEV("div", { className: "space-y-4", children: projSection.entries.map((entry, entryIdx) => {
+            const tailoredEntry = accepted && tailoredSection ? tailoredSection.entries.find((e) => e.id === entry.id) : void 0;
+            return /* @__PURE__ */ jsxDEV("div", { className: entryIdx > 0 ? "pt-3 border-t border-dark-border" : "", children: [
+              /* @__PURE__ */ jsxDEV("div", { className: "flex items-start justify-between mb-1", children: [
+                /* @__PURE__ */ jsxDEV("h4", { className: "font-medium text-text-primary", children: entry.name }, void 0, false, {
+                  fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                  lineNumber: 721,
+                  columnNumber: 21
+                }, this),
+                entry.dates && /* @__PURE__ */ jsxDEV("div", { className: "text-sm text-text-muted", children: entry.dates }, void 0, false, {
+                  fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                  lineNumber: 723,
+                  columnNumber: 21
+                }, this)
+              ] }, void 0, true, {
+                fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                lineNumber: 720,
+                columnNumber: 19
+              }, this),
+              entry.description && /* @__PURE__ */ jsxDEV("p", { className: "text-sm text-text-secondary mb-2", children: entry.description }, void 0, false, {
+                fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                lineNumber: 727,
+                columnNumber: 19
+              }, this),
+              entry.bullets && entry.bullets.length > 0 && /* @__PURE__ */ jsxDEV("ul", { className: "space-y-2", children: entry.bullets.map((bullet) => {
+                const tailoredBullet = tailoredEntry ? tailoredEntry.bullets.find((b) => b.index === bullet.index) : void 0;
+                const displayText = tailoredBullet ? tailoredBullet.tailored : bullet.text;
+                const editKey = `projects:${entry.id}:${bullet.index}`;
+                const cachedExplanation = bulletAICacheRef.current.get(editKey)?.explanation;
+                const isEditingThis = isBulletEditing("projects", entry.id, bullet.index);
+                const aiIsForThisBullet = isEditingThis && aiResponseBelongsToBullet("projects", entry.id, bullet.index);
+                return /* @__PURE__ */ jsxDEV(
+                  EditableBullet,
+                  {
+                    bullet: displayText,
+                    isEditing: isEditingThis,
+                    editedText: editingState?.editedText ?? displayText,
+                    onStartEdit: () => handleStartBulletEdit("projects", entry.id, bullet.index, displayText),
+                    onTextChange: handleTextChange,
+                    onSave: () => handleSaveBullet("projects", entry.id, bullet.index),
+                    onCancel: handleEditComplete,
+                    onAskAI: (prompt) => handleAskAI(prompt, "projects", entry.id, bullet.index, displayText),
+                    aiSuggestion: aiIsForThisBullet ? aiSuggestion : void 0,
+                    aiExplanation: aiIsForThisBullet && aiExplanation || cachedExplanation || tailoredBullet?.explanation,
+                    canUndo: canUndo?.(editKey),
+                    canRedo: canRedo?.(editKey),
+                    onUndo: () => onUndo?.(editKey, displayText),
+                    onRedo: () => onRedo?.(editKey)
+                  },
+                  bullet.index,
+                  false,
+                  {
+                    fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                    lineNumber: 743,
+                    columnNumber: 25
+                  },
+                  this
+                );
+              }) }, void 0, false, {
+                fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                lineNumber: 730,
+                columnNumber: 19
+              }, this)
+            ] }, entry.id, true, {
+              fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+              lineNumber: 719,
+              columnNumber: 17
+            }, this);
+          }) }, void 0, false, {
+            fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+            lineNumber: 712,
+            columnNumber: 11
+          }, this)
+        },
+        "projects",
+        false,
+        {
+          fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+          lineNumber: 705,
+          columnNumber: 9
+        },
+        this
+      );
+    }
+    if (section.type === "certifications") {
+      const certSection = section;
+      if (!certSection.entries || certSection.entries.length === 0) return null;
+      const tailoredSection = tailoredData.sections?.find((s) => s.sectionType === "certifications");
+      return /* @__PURE__ */ jsxDEV(
+        ResumeSectionCard,
+        {
+          id: "certifications",
+          title: section.rawLabel || "Certifications",
+          isActive: activeSection === "certifications",
+          isTailored: accepted,
+          children: /* @__PURE__ */ jsxDEV("div", { className: "space-y-3", children: certSection.entries.map((entry, entryIdx) => {
+            const tailoredEntry = accepted && tailoredSection ? tailoredSection.entries.find((e) => e.id === entry.id) : void 0;
+            return /* @__PURE__ */ jsxDEV("div", { className: entryIdx > 0 ? "pt-2 border-t border-dark-border" : "", children: [
+              /* @__PURE__ */ jsxDEV("div", { className: "flex items-start justify-between", children: [
+                /* @__PURE__ */ jsxDEV("div", { children: [
+                  /* @__PURE__ */ jsxDEV("p", { className: "font-medium text-text-primary text-sm", children: entry.name }, void 0, false, {
+                    fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                    lineNumber: 805,
+                    columnNumber: 23
+                  }, this),
+                  entry.issuer && /* @__PURE__ */ jsxDEV("p", { className: "text-xs text-text-secondary", children: entry.issuer }, void 0, false, {
+                    fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                    lineNumber: 807,
+                    columnNumber: 23
+                  }, this)
+                ] }, void 0, true, {
+                  fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                  lineNumber: 804,
+                  columnNumber: 21
+                }, this),
+                entry.date && /* @__PURE__ */ jsxDEV("div", { className: "text-xs text-text-muted", children: entry.date }, void 0, false, {
+                  fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                  lineNumber: 811,
+                  columnNumber: 21
+                }, this)
+              ] }, void 0, true, {
+                fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                lineNumber: 803,
+                columnNumber: 19
+              }, this),
+              entry.bullets && entry.bullets.length > 0 && /* @__PURE__ */ jsxDEV("ul", { className: "space-y-2 mt-2", children: entry.bullets.map((bullet) => {
+                const tailoredBullet = tailoredEntry ? tailoredEntry.bullets.find((b) => b.index === bullet.index) : void 0;
+                const displayText = tailoredBullet ? tailoredBullet.tailored : bullet.text;
+                const editKey = `certifications:${entry.id}:${bullet.index}`;
+                const cachedExplanation = bulletAICacheRef.current.get(editKey)?.explanation;
+                const isEditingThis = isBulletEditing("certifications", entry.id, bullet.index);
+                const aiIsForThisBullet = isEditingThis && aiResponseBelongsToBullet("certifications", entry.id, bullet.index);
+                return /* @__PURE__ */ jsxDEV(
+                  EditableBullet,
+                  {
+                    bullet: displayText,
+                    isEditing: isEditingThis,
+                    editedText: editingState?.editedText ?? displayText,
+                    onStartEdit: () => handleStartBulletEdit(
+                      "certifications",
+                      entry.id,
+                      bullet.index,
+                      displayText
+                    ),
+                    onTextChange: handleTextChange,
+                    onSave: () => handleSaveBullet("certifications", entry.id, bullet.index),
+                    onCancel: handleEditComplete,
+                    onAskAI: (prompt) => handleAskAI(
+                      prompt,
+                      "certifications",
+                      entry.id,
+                      bullet.index,
+                      displayText
+                    ),
+                    aiSuggestion: aiIsForThisBullet ? aiSuggestion : void 0,
+                    aiExplanation: aiIsForThisBullet && aiExplanation || cachedExplanation || tailoredBullet?.explanation,
+                    canUndo: canUndo?.(editKey),
+                    canRedo: canRedo?.(editKey),
+                    onUndo: () => onUndo?.(editKey, displayText),
+                    onRedo: () => onRedo?.(editKey)
+                  },
+                  bullet.index,
+                  false,
+                  {
+                    fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                    lineNumber: 829,
+                    columnNumber: 25
+                  },
+                  this
+                );
+              }) }, void 0, false, {
+                fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                lineNumber: 815,
+                columnNumber: 19
+              }, this)
+            ] }, entry.id, true, {
+              fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+              lineNumber: 802,
+              columnNumber: 17
+            }, this);
+          }) }, void 0, false, {
+            fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+            lineNumber: 795,
+            columnNumber: 11
+          }, this)
+        },
+        "certifications",
+        false,
+        {
+          fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+          lineNumber: 788,
+          columnNumber: 9
+        },
+        this
+      );
+    }
+    if (section.type === "awards") {
+      const awardsSection = section;
+      if (!awardsSection.entries || awardsSection.entries.length === 0) return null;
+      const tailoredSection = tailoredData.sections?.find((s) => s.sectionType === "awards");
+      return /* @__PURE__ */ jsxDEV(
+        ResumeSectionCard,
+        {
+          id: "awards",
+          title: section.rawLabel || "Awards",
+          isActive: activeSection === "awards",
+          isTailored: accepted,
+          children: /* @__PURE__ */ jsxDEV("div", { className: "space-y-3", children: awardsSection.entries.map((entry, entryIdx) => {
+            const tailoredEntry = accepted && tailoredSection ? tailoredSection.entries.find((e) => e.id === entry.id) : void 0;
+            return /* @__PURE__ */ jsxDEV("div", { className: entryIdx > 0 ? "pt-2 border-t border-dark-border" : "", children: [
+              /* @__PURE__ */ jsxDEV("div", { className: "flex items-start justify-between", children: [
+                /* @__PURE__ */ jsxDEV("div", { children: [
+                  /* @__PURE__ */ jsxDEV("p", { className: "font-medium text-text-primary text-sm", children: entry.name }, void 0, false, {
+                    fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                    lineNumber: 904,
+                    columnNumber: 23
+                  }, this),
+                  entry.issuer && /* @__PURE__ */ jsxDEV("p", { className: "text-xs text-text-secondary", children: entry.issuer }, void 0, false, {
+                    fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                    lineNumber: 906,
+                    columnNumber: 23
+                  }, this)
+                ] }, void 0, true, {
+                  fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                  lineNumber: 903,
+                  columnNumber: 21
+                }, this),
+                entry.date && /* @__PURE__ */ jsxDEV("div", { className: "text-xs text-text-muted", children: entry.date }, void 0, false, {
+                  fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                  lineNumber: 910,
+                  columnNumber: 21
+                }, this)
+              ] }, void 0, true, {
+                fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                lineNumber: 902,
+                columnNumber: 19
+              }, this),
+              entry.bullets && entry.bullets.length > 0 && /* @__PURE__ */ jsxDEV("ul", { className: "space-y-2 mt-2", children: entry.bullets.map((bullet) => {
+                const tailoredBullet = tailoredEntry ? tailoredEntry.bullets.find((b) => b.index === bullet.index) : void 0;
+                const displayText = tailoredBullet ? tailoredBullet.tailored : bullet.text;
+                const editKey = `awards:${entry.id}:${bullet.index}`;
+                const cachedExplanation = bulletAICacheRef.current.get(editKey)?.explanation;
+                const isEditingThis = isBulletEditing("awards", entry.id, bullet.index);
+                const aiIsForThisBullet = isEditingThis && aiResponseBelongsToBullet("awards", entry.id, bullet.index);
+                return /* @__PURE__ */ jsxDEV(
+                  EditableBullet,
+                  {
+                    bullet: displayText,
+                    isEditing: isEditingThis,
+                    editedText: editingState?.editedText ?? displayText,
+                    onStartEdit: () => handleStartBulletEdit("awards", entry.id, bullet.index, displayText),
+                    onTextChange: handleTextChange,
+                    onSave: () => handleSaveBullet("awards", entry.id, bullet.index),
+                    onCancel: handleEditComplete,
+                    onAskAI: (prompt) => handleAskAI(prompt, "awards", entry.id, bullet.index, displayText),
+                    aiSuggestion: aiIsForThisBullet ? aiSuggestion : void 0,
+                    aiExplanation: aiIsForThisBullet && aiExplanation || cachedExplanation || tailoredBullet?.explanation,
+                    canUndo: canUndo?.(editKey),
+                    canRedo: canRedo?.(editKey),
+                    onUndo: () => onUndo?.(editKey, displayText),
+                    onRedo: () => onRedo?.(editKey)
+                  },
+                  bullet.index,
+                  false,
+                  {
+                    fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                    lineNumber: 927,
+                    columnNumber: 25
+                  },
+                  this
+                );
+              }) }, void 0, false, {
+                fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                lineNumber: 914,
+                columnNumber: 19
+              }, this)
+            ] }, entry.id, true, {
+              fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+              lineNumber: 901,
+              columnNumber: 17
+            }, this);
+          }) }, void 0, false, {
+            fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+            lineNumber: 894,
+            columnNumber: 11
+          }, this)
+        },
+        "awards",
+        false,
+        {
+          fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+          lineNumber: 887,
+          columnNumber: 9
+        },
+        this
+      );
+    }
+    if (section.type === "volunteer" || section.type === "languages" || section.type === "contact" || section.type === "unknown") {
+      const genSection = section;
+      const hasGenericContent = genSection.content && genSection.content.trim() || genSection.entries && genSection.entries.length > 0;
+      if (!hasGenericContent) return null;
+      const sectionId = section.type === "contact" ? "contact-section" : section.type;
+      return /* @__PURE__ */ jsxDEV(
+        ResumeSectionCard,
+        {
+          id: sectionId,
+          title: section.rawLabel || section.type,
+          isActive: activeSection === sectionId,
+          children: genSection.content ? /* @__PURE__ */ jsxDEV("p", { className: "leading-relaxed", children: genSection.content }, void 0, false, {
+            fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+            lineNumber: 987,
+            columnNumber: 11
+          }, this) : /* @__PURE__ */ jsxDEV("div", { className: "space-y-2", children: genSection.entries?.map(
+            (entry) => /* @__PURE__ */ jsxDEV("div", { children: [
+              entry.name && /* @__PURE__ */ jsxDEV("p", { className: "font-medium text-text-primary text-sm", children: entry.name }, void 0, false, {
+                fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                lineNumber: 993,
+                columnNumber: 15
+              }, this),
+              entry.content && /* @__PURE__ */ jsxDEV("p", { className: "text-sm text-text-secondary", children: entry.content }, void 0, false, {
+                fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                lineNumber: 996,
+                columnNumber: 15
+              }, this),
+              entry.bullets && entry.bullets.length > 0 && /* @__PURE__ */ jsxDEV("ul", { className: "space-y-1 mt-1", children: entry.bullets.map(
+                (b) => /* @__PURE__ */ jsxDEV("li", { className: "flex items-start gap-2", children: [
+                  /* @__PURE__ */ jsxDEV("span", { className: "text-accent-blue mt-1.5 text-[10px] flex-shrink-0", children: "●" }, void 0, false, {
+                    fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                    lineNumber: 1002,
+                    columnNumber: 27
+                  }, this),
+                  /* @__PURE__ */ jsxDEV("span", { className: "text-sm leading-relaxed", children: b.text }, void 0, false, {
+                    fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                    lineNumber: 1003,
+                    columnNumber: 27
+                  }, this)
+                ] }, b.index, true, {
+                  fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                  lineNumber: 1001,
+                  columnNumber: 17
+                }, this)
+              ) }, void 0, false, {
+                fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+                lineNumber: 999,
+                columnNumber: 15
+              }, this)
+            ] }, entry.id, true, {
+              fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+              lineNumber: 991,
+              columnNumber: 13
+            }, this)
+          ) }, void 0, false, {
+            fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+            lineNumber: 989,
+            columnNumber: 11
+          }, this)
+        },
+        sectionId,
+        false,
+        {
+          fileName: "/Users/cordell/source/Resume-Builder/frontend/src/components/resume/ResumePreview.tsx",
+          lineNumber: 980,
+          columnNumber: 9
+        },
+        this
+      );
+    }
+    return null;
+  })', 'resume.sections.map' is undefined)
+	ResumePreview (ResumePreview.tsx:403)
+	renderWithHooks (chunk-VKLKESE7.js:11548)
+	mountIndeterminateComponent (chunk-VKLKESE7.js:14926)
+	callCallback2 (chunk-VKLKESE7.js:3674)
+	dispatchEvent
+	invokeGuardedCallbackDev (chunk-VKLKESE7.js:3699)
+	invokeGuardedCallback (chunk-VKLKESE7.js:3733)
+	beginWork$1 (chunk-VKLKESE7.js:19765)
+	performUnitOfWork (chunk-VKLKESE7.js:19198)
+	workLoopSync (chunk-VKLKESE7.js:19137)
+	renderRootSync (chunk-VKLKESE7.js:19116)
+	recoverFromConcurrentError (chunk-VKLKESE7.js:18736)
+	performConcurrentWorkOnRoot (chunk-VKLKESE7.js:18684)
+	workLoop (chunk-VKLKESE7.js:197)
+	flushWork (chunk-VKLKESE7.js:176)
+	performWorkUntilDeadline (chunk-VKLKESE7.js:384)
+[Error] The above error occurred in the <LeftSidebar> component:
+
+LeftSidebar@http://localhost:5173/src/components/layout/LeftSidebar.tsx:19:16
+div
+div
+AppShell@http://localhost:5173/src/components/layout/AppShell.tsx:42:11
+AppContent@http://localhost:5173/src/App.tsx:40:11
+AppProvider@http://localhost:5173/src/context/AppContext.tsx:247:5
+App
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
+	logCapturedError (chunk-VKLKESE7.js:14032)
+	(anonymous function) (chunk-VKLKESE7.js:14052)
+	callCallback (chunk-VKLKESE7.js:11248)
+	commitUpdateQueue (chunk-VKLKESE7.js:11265)
+	commitLayoutEffectOnFiber (chunk-VKLKESE7.js:17093)
+	commitLayoutMountEffects_complete (chunk-VKLKESE7.js:17980)
+	commitLayoutEffects_begin (chunk-VKLKESE7.js:17969)
+	commitLayoutEffects (chunk-VKLKESE7.js:17920)
+	commitRootImpl (chunk-VKLKESE7.js:19353)
+	commitRoot (chunk-VKLKESE7.js:19277)
+	finishConcurrentRender (chunk-VKLKESE7.js:18760)
+	performConcurrentWorkOnRoot (chunk-VKLKESE7.js:18718)
+	workLoop (chunk-VKLKESE7.js:197)
+	flushWork (chunk-VKLKESE7.js:176)
+	performWorkUntilDeadline (chunk-VKLKESE7.js:384)
+[Error] The above error occurred in the <ResumePreview> component:
+
+ResumePreview@http://localhost:5173/src/components/resume/ResumePreview.tsx:317:15
+div
+div
+CenterPanel@http://localhost:5173/src/components/layout/CenterPanel.tsx:35:32
+main
+div
+div
+AppShell@http://localhost:5173/src/components/layout/AppShell.tsx:42:11
+AppContent@http://localhost:5173/src/App.tsx:40:11
+AppProvider@http://localhost:5173/src/context/AppContext.tsx:247:5
+App
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
+	logCapturedError (chunk-VKLKESE7.js:14032)
+	(anonymous function) (chunk-VKLKESE7.js:14052)
+	callCallback (chunk-VKLKESE7.js:11248)
+	commitUpdateQueue (chunk-VKLKESE7.js:11265)
+	commitLayoutEffectOnFiber (chunk-VKLKESE7.js:17093)
+	commitLayoutMountEffects_complete (chunk-VKLKESE7.js:17980)
+	commitLayoutEffects_begin (chunk-VKLKESE7.js:17969)
+	commitLayoutEffects (chunk-VKLKESE7.js:17920)
+	commitRootImpl (chunk-VKLKESE7.js:19353)
+	commitRoot (chunk-VKLKESE7.js:19277)
+	finishConcurrentRender (chunk-VKLKESE7.js:18760)
+	performConcurrentWorkOnRoot (chunk-VKLKESE7.js:18718)
+	workLoop (chunk-VKLKESE7.js:197)
+	flushWork (chunk-VKLKESE7.js:176)
+	performWorkUntilDeadline (chunk-VKLKESE7.js:384)
+[Error] TypeError: resume.sections.map is not a function. (In 'resume.sections.map((s) => s.type)', 'resume.sections.map' is undefined)
+	commitRootImpl (chunk-VKLKESE7.js:19413)
+	commitRoot (chunk-VKLKESE7.js:19277)
+	finishConcurrentRender (chunk-VKLKESE7.js:18760)
+	performConcurrentWorkOnRoot (chunk-VKLKESE7.js:18718)
+	workLoop (chunk-VKLKESE7.js:197)
+	flushWork (chunk-VKLKESE7.js:176)
+	performWorkUntilDeadline (chunk-VKLKESE7.js:384)
+> Selected Element
+< <body class="gbx-installed">…</body>

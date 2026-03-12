@@ -2,6 +2,107 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Theme CSS custom properties - all components auto-respond to theme changes */
+/* Values are space-separated RGB for Tailwind opacity modifier support */
+:root {
+  --color-dark-bg: 13 13 13;
+  --color-dark-surface: 26 26 26;
+  --color-dark-elevated: 36 36 36;
+  --color-dark-border: 48 48 48;
+  --color-dark-hover: 56 56 56;
+  --color-text-primary: 232 234 237;
+  --color-text-secondary: 154 160 166;
+  --color-text-muted: 95 99 104;
+  --color-accent-blue: 138 180 248;
+  --color-accent-green: 129 201 149;
+  --color-accent-yellow: 253 214 99;
+  --color-accent-red: 242 139 130;
+}
+
+html:not(.dark) {
+  --color-dark-bg: 248 250 252;
+  --color-dark-surface: 255 255 255;
+  --color-dark-elevated: 241 245 249;
+  --color-dark-border: 226 232 240;
+  --color-dark-hover: 203 213 225;
+  --color-text-primary: 30 41 59;
+  --color-text-secondary: 71 85 105;
+  --color-text-muted: 148 163 184;
+  --color-accent-blue: 59 130 246;
+  --color-accent-green: 34 197 94;
+  --color-accent-yellow: 234 179 8;
+  --color-accent-red: 239 68 68;
+}
+
 body {
-  @apply bg-gray-50 text-gray-900;
+  color: rgb(var(--color-text-primary));
+  min-height: 100vh;
+}
+
+/* Dark mode gradient */
+.dark body {
+  background: linear-gradient(180deg, #0a1628 0%, #060d1a 40%, #030308 100%);
+}
+
+/* Light mode gradient */
+html:not(.dark) body {
+  background: linear-gradient(180deg, #eef2f7 0%, #e2e8f0 50%, #dde4ed 100%);
+}
+
+/* Resume page gradient - dark red, flipped (bottom to top) */
+.dark .resume-page-gradient {
+  background: linear-gradient(0deg, #1a0808 0%, #120407 10%, #080305 15%, #030305 25%, #030308 100%);
+}
+
+html:not(.dark) .resume-page-gradient {
+  background: linear-gradient(0deg, #fef2f2 0%, #fae8e8 10%, #f3eded 15%, #eef2f7 25%, #eef2f7 100%);
+}
+
+/* Dark scrollbar styles */
+.dark ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: rgb(var(--color-dark-border));
+  border-radius: 9999px;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: rgb(var(--color-dark-hover));
+}
+
+/* Light scrollbar styles */
+html:not(.dark) ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+html:not(.dark) ::-webkit-scrollbar-track {
+  background: #e2e8f0;
+}
+
+html:not(.dark) ::-webkit-scrollbar-thumb {
+  background: #94a3b8;
+  border-radius: 9999px;
+}
+
+html:not(.dark) ::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
+}
+
+/* Firefox scrollbar */
+.dark * {
+  scrollbar-width: thin;
+  scrollbar-color: #303030 transparent;
+}
+
+html:not(.dark) * {
+  scrollbar-width: thin;
+  scrollbar-color: #94a3b8 #e2e8f0;
 }

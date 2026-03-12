@@ -38,7 +38,7 @@ export async function exportToExcel(bundles: SessionBundle[]): Promise<void> {
 
   // Style header row
   const appHeaderRow = appSheet.getRow(1);
-  appHeaderRow.eachCell((cell) => {
+  appHeaderRow.eachCell((cell: ExcelJS.Cell) => {
     cell.font = { bold: true, color: { argb: 'FFFFFFFF' } };
     cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF2563EB' } };
     cell.alignment = { vertical: 'middle', horizontal: 'center' };
@@ -129,7 +129,7 @@ export async function exportToExcel(bundles: SessionBundle[]): Promise<void> {
   }
 
   // Set column widths
-  appSheet.columns.forEach((col, i) => {
+  appSheet.columns.forEach((col: Partial<ExcelJS.Column>, i: number) => {
     col.width = Math.min(50, Math.max(10, appColWidths[i] + 2));
   });
 
@@ -154,7 +154,7 @@ export async function exportToExcel(bundles: SessionBundle[]): Promise<void> {
 
   // Style header row
   const intHeaderRow = intSheet.getRow(1);
-  intHeaderRow.eachCell((cell) => {
+  intHeaderRow.eachCell((cell: ExcelJS.Cell) => {
     cell.font = { bold: true, color: { argb: 'FFFFFFFF' } };
     cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF2563EB' } };
     cell.alignment = { vertical: 'middle', horizontal: 'center' };
@@ -207,7 +207,7 @@ export async function exportToExcel(bundles: SessionBundle[]): Promise<void> {
   }
 
   // Set column widths
-  intSheet.columns.forEach((col, i) => {
+  intSheet.columns.forEach((col: Partial<ExcelJS.Column>, i: number) => {
     col.width = Math.min(50, Math.max(10, intColWidths[i] + 2));
   });
 
@@ -249,7 +249,7 @@ function getCellString(cell: ExcelJS.Cell): string {
     }
     // CellRichTextValue: { richText: RichText[] }
     if ('richText' in v && Array.isArray((v as ExcelJS.CellRichTextValue).richText)) {
-      return (v as ExcelJS.CellRichTextValue).richText.map((r) => r.text ?? '').join('').trim();
+      return (v as ExcelJS.CellRichTextValue).richText.map((r: ExcelJS.RichText) => r.text ?? '').join('').trim();
     }
   }
   return String(v);
@@ -288,7 +288,7 @@ export async function importFromExcel(file: File): Promise<ImportResult> {
   // Build header → column-index map (case-insensitive)
   const headerRow = appSheet.getRow(1);
   const colMap: Record<string, number> = {};
-  headerRow.eachCell((cell, colNumber) => {
+  headerRow.eachCell((cell: ExcelJS.Cell, colNumber: number) => {
     const name = getCellString(cell).toLowerCase();
     if (name) colMap[name] = colNumber;
   });
@@ -332,7 +332,7 @@ export async function importFromExcel(file: File): Promise<ImportResult> {
     sessionByKey.set(key, session);
   }
 
-  appSheet.eachRow((row, rowNumber) => {
+  appSheet.eachRow((row: ExcelJS.Row, rowNumber: number) => {
     if (rowNumber === 1) return; // skip header
 
     const jobTitle = col('job title') > 0 ? getCellString(row.getCell(col('job title'))) : '';
@@ -435,14 +435,14 @@ export async function importFromExcel(file: File): Promise<ImportResult> {
   if (intSheet) {
     const intHeaderRow = intSheet.getRow(1);
     const intColMap: Record<string, number> = {};
-    intHeaderRow.eachCell((cell, colNumber) => {
+    intHeaderRow.eachCell((cell: ExcelJS.Cell, colNumber: number) => {
       const name = getCellString(cell).toLowerCase();
       if (name) intColMap[name] = colNumber;
     });
 
     const ic = (name: string): number => intColMap[name.toLowerCase()] ?? -1;
 
-    intSheet.eachRow((row, rowNumber) => {
+    intSheet.eachRow((row: ExcelJS.Row, rowNumber: number) => {
       if (rowNumber === 1) return;
 
       const jobTitle = ic('job title') > 0 ? getCellString(row.getCell(ic('job title'))) : '';

@@ -10,6 +10,7 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
   },
   "dependencies": {
+    "@hello-pangea/dnd": "^18.0.1",
     "axios": "^1.6.5",
     "exceljs": "^4.4.0",
     "react": "^18.2.0",

@@ -145,6 +145,26 @@ export default function TrackerView({ onBack }: Props): JSX.Element {
     }
   };
 
+  // Handle drag-and-drop status change from board
+  const handleStatusChange = async (sessionId: string, newStatus: ApplicationStatus) => {
+    const bundle = allBundles.find((b) => b.session.id === sessionId);
+    if (!bundle) return;
+    const updated: TailoringSession = {
+      ...bundle.session,
+      applicationStatus: newStatus,
+      appliedAt: newStatus === 'applied' && !bundle.session.appliedAt
+        ? new Date().toISOString()
+        : bundle.session.appliedAt,
+      updatedAt: new Date().toISOString(),
+    };
+    try {
+      await sessionDB.save(updated);
+      await loadData();
+    } catch (err) {
+      console.error('Failed to update status:', err);
+    }
+  };
+
   // Save bundle after modal edit
   const handleSave = async (updated: TailoringSession) => {
     try {
@@ -312,7 +332,7 @@ export default function TrackerView({ onBack }: Props): JSX.Element {
           </div>
         ) : (
           <div className="h-full">
-            <TrackerBoard bundles={filteredBundles} onSelectBundle={setSelectedBundle} />
+            <TrackerBoard bundles={filteredBundles} onSelectBundle={setSelectedBundle} onStatusChange={handleStatusChange} />
           </div>
         )}
       </main>

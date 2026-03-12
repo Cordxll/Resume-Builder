@@ -107,7 +107,6 @@ export default function ApplicationDetailModal({
   const [contactEmail, setContactEmail] = useState(tracking.contactEmail ?? '');
   const [notes, setNotes] = useState(tracking.notes ?? '');
   const [tagsInput, setTagsInput] = useState((tracking.tags ?? []).join(', '));
-  const [tags, setTags] = useState<string[]>(tracking.tags ?? []);
   const [nextFollowUp, setNextFollowUp] = useState(
     tracking.nextFollowUp ? tracking.nextFollowUp.slice(0, 10) : ''
   );
@@ -117,13 +116,10 @@ export default function ApplicationDetailModal({
   const [showAddRound, setShowAddRound] = useState(false);
   const [newRound, setNewRound] = useState<NewRoundForm>(emptyRoundForm);
 
-  const handleTagsBlur = () => {
-    const parsed = tagsInput
-      .split(',')
-      .map((t) => t.trim())
-      .filter(Boolean);
-    setTags(parsed);
-  };
+  const parsedTags = tagsInput
+    .split(',')
+    .map((t) => t.trim())
+    .filter(Boolean);
 
   const handleAddRound = () => {
     const roundNum = parseInt(newRound.round, 10);
@@ -157,7 +153,7 @@ export default function ApplicationDetailModal({
       notes: notes || undefined,
       interviews,
       nextFollowUp: nextFollowUp ? new Date(nextFollowUp).toISOString() : undefined,
-      tags: tags.length > 0 ? tags : undefined,
+      tags: parsedTags.length > 0 ? parsedTags : undefined,
     };
 
     const updated: TailoringSession = {
@@ -330,13 +326,13 @@ export default function ApplicationDetailModal({
               type="text"
               value={tagsInput}
               onChange={(e) => setTagsInput(e.target.value)}
-              onBlur={handleTagsBlur}
+              onBlur={() => {}} // parsedTags derived inline; no onBlur action needed
               placeholder="startup, remote, fintech (comma-separated)"
               className="w-full px-3 py-2 rounded-lg border border-dark-border bg-dark-elevated text-sm text-text-primary placeholder-text-muted focus:outline-none focus:ring-1 focus:ring-accent-blue"
             />
-            {tags.length > 0 && (
+            {parsedTags.length > 0 && (
               <div className="flex flex-wrap gap-1.5 mt-2">
-                {tags.map((tag) => (
+                {parsedTags.map((tag) => (
                   <span
                     key={tag}
                     className="px-2 py-0.5 text-xs rounded-full bg-accent-blue/10 text-accent-blue border border-accent-blue/20"

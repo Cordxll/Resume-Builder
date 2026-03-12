@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, type JSX } from 'react';
 import { ApplicationStatus } from '../../types/storage';
 import { SessionBundle } from '../../services/sessionFile';
 
@@ -43,6 +43,31 @@ const STATUS_COLORS: Record<ApplicationStatus, string> = {
 function formatDate(iso: string | undefined): string {
   if (!iso) return '—';
   return iso.slice(0, 10);
+}
+
+interface SortIconProps {
+  col: SortKey;
+  sortKey: SortKey;
+  sortDir: SortDir;
+}
+
+function SortIcon({ col, sortKey, sortDir }: SortIconProps): JSX.Element {
+  if (sortKey !== col) {
+    return (
+      <svg className="w-3 h-3 text-text-muted opacity-40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16V4m0 0L3 8m4-4l4 4M17 8v12m0 0l4-4m-4 4l-4-4" />
+      </svg>
+    );
+  }
+  return sortDir === 'asc' ? (
+    <svg className="w-3 h-3 text-accent-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
+    </svg>
+  ) : (
+    <svg className="w-3 h-3 text-accent-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+    </svg>
+  );
 }
 
 export default function TrackerTable({ bundles, onSelectBundle }: Props): JSX.Element {
@@ -100,25 +125,6 @@ export default function TrackerTable({ bundles, onSelectBundle }: Props): JSX.El
     return sortDir === 'asc' ? cmp : -cmp;
   });
 
-  const SortIcon = ({ col }: { col: SortKey }) => {
-    if (sortKey !== col) {
-      return (
-        <svg className="w-3 h-3 text-text-muted opacity-40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16V4m0 0L3 8m4-4l4 4M17 8v12m0 0l4-4m-4 4l-4-4" />
-        </svg>
-      );
-    }
-    return sortDir === 'asc' ? (
-      <svg className="w-3 h-3 text-accent-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
-      </svg>
-    ) : (
-      <svg className="w-3 h-3 text-accent-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-      </svg>
-    );
-  };
-
   const columns: { key: SortKey; label: string; sortable: boolean }[] = [
     { key: 'jobTitle', label: 'Job Title', sortable: true },
     { key: 'company', label: 'Company', sortable: true },
@@ -156,7 +162,7 @@ export default function TrackerTable({ bundles, onSelectBundle }: Props): JSX.El
               >
                 <div className="flex items-center gap-1.5">
                   {col.label}
-                  {col.sortable && <SortIcon col={col.key} />}
+                  {col.sortable && <SortIcon col={col.key} sortKey={sortKey} sortDir={sortDir} />}
                 </div>
               </th>
             ))}
